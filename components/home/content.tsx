@@ -1,20 +1,20 @@
 "use client";
 import React from "react";
-import dynamic from "next/dynamic";
+// import dynamic from "next/dynamic";
 import { TableWrapper } from "../table/table";
-import { CardBalance1 } from "./card-balance1";
-import { CardBalance2 } from "./card-balance2";
-import { CardBalance3 } from "./card-balance3";
-import { CardAgents } from "./card-agents";
+// import { CardBalance1 } from "./card-balance1";
+// import { CardBalance2 } from "./card-balance2";
+// import { CardBalance3 } from "./card-balance3";
+// import { CardAgents } from "./card-agents";
 import { CardTransactions } from "./card-transactions";
 import { Link } from "@nextui-org/react";
 import NextLink from "next/link";
 // import { Steam } from '../charts/steam'; 
 
 
-const Chart = dynamic(() => import("../charts/steam").then((mod) => mod.Steam), {
-  ssr: false,
-});
+// const Chart = dynamic(() => import("../charts/steam").then((mod) => mod.Steam), {
+//   ssr: false,
+// });
 
 
 // const Chart = dynamic(() => import("../charts/steam").then((mod) => mod.Steam), {
@@ -29,7 +29,7 @@ export const Content = () => (
         <div className="h-full flex flex-col gap-2">
           <h3 className="text-xl font-semibold">Statistics</h3>
           <div className="w-full bg-default-50 shadow-lg rounded-2xl p-6 ">
-            <Chart />
+            {/* <Chart /> */}
           </div>
         </div>
       </div>
