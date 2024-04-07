@@ -17,7 +17,7 @@ interface item {
   logo: React.ReactNode;
 }
 
-export default ({ items }: { items: item[] }) => {
+export default function CustomDropdown({ items }: { items: item[] }) {
   const [selected, setSelected] = useState<item>({
     title: items[0]?.title,
     description: items[0]?.description,
@@ -72,4 +72,4 @@ export default ({ items }: { items: item[] }) => {
       </DropdownMenu>
     </Dropdown>
   );
-};
+}
