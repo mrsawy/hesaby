@@ -55,7 +55,7 @@ export default function CustomDropdown({ items }: { items: item[] }) {
         aria-label="Avatar Actions"
       >
         <DropdownSection title="Dropdown">
-          {items.map((item, i) => (
+          {/* {items.map((item, i) => (
             <DropdownItem
               key={i}
               startContent={item.logo}
@@ -67,7 +67,7 @@ export default function CustomDropdown({ items }: { items: item[] }) {
             >
               {item.title}
             </DropdownItem>
-          ))}
+          ))} */}
         </DropdownSection>
       </DropdownMenu>
     </Dropdown>
