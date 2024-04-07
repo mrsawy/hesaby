@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* .flex.w-screen.h-[100vh].fixed.inset-0.z-50.overflow-x-auto.justify-center[--scale-enter:100%][--scale-exit:100%][--slide-enter:0px][--slide-exit:80px]sm:[--scale-enter:100%]sm:[--scale-exit:103%]sm:[--slide-enter:0px]sm:[--slide-exit:0px]items-start.sm\:items-center { */
+/* Your CSS styles here */
+
+/* Your CSS styles here */
+
+div[tabindex="-1"] .flex.w-screen.inset-0.z-50:nth-child(2) {
+  z-index: 220 !important;
+}
+div[tabindex="-1"] .backdrop-opacity-disabled.w-screen.h-screen.fixed.inset-0.z-50:nth-child(1) {
+  z-index: 210 !important;
+}
+
