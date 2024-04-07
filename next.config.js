@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  exclude: [/v1/],
+  // exclude: [/v1/],
 
 };
 
