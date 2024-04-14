@@ -1,0 +1,188 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id           Int     @id @default(autoincrement())
+  name         String?
+  email        String
+  phoneNumber  String?
+  profilePhoto String?
+  password     String
+  isSuper      Boolean @default(false)
+  // percentage   Float
+}
+
+model BankData {
+  id                Int    @id @default(autoincrement())
+  ibanNumber        String
+  bankName          String
+  accountHolderName String
+  user              User   @relation(fields: [user_id], references: [id])
+  user_id           Int
+}
+
+model Platform {
+  id                Int       @id @default(autoincrement())
+  title             String
+  type              String
+  describtion       String
+  platformImg       String
+  platformFavicon   String
+  termsAndCondition String
+  console           Console?  @relation(fields: [console_id], references: [id])
+  console_id        Int?
+  accounts          Account[]
+}
+
+model Console {
+  id             Int        @id @default(autoincrement())
+  title          String
+  describtion    String
+  consoleImg     String
+  consoleFavicon String
+  platforms      Platform[]
+}
+
+model Account {
+  id             Int            @id @default(autoincrement())
+  status         String
+  title          String
+  description    String
+  username       String
+  email          String
+  password       String
+  rejectedReason String?
+  price          Float
+  tax            Float
+  finalPrice     Float
+  platform       Platform       @relation(fields: [platform_id], references: [id])
+  platform_id    Int
+  seller         User           @relation(fields: [seller_id], references: [id])
+  seller_id      Int
+  accountImages  AccountImage[]
+  orders         Order[]
+  // User           User?          @relation(fields: [userId], references: [id])
+  // userId         Int?
+}
+
+model AccountImage {
+  id         Int     @id @default(autoincrement())
+  url        String
+  alt        String
+  account    Account @relation(fields: [account_id], references: [id])
+  account_id Int
+}
+
+// model User {
+//   id                  Int        @id @default(autoincrement())
+//   firstName           String
+//   lastName            String
+//   email               String
+//   phoneNumber         String
+//   password            String
+//   profileImg          String
+//   gender              String
+//   balance             Float      @default(0)
+//   isWithdrawRequested Boolean
+//   isBlocked           Boolean    @default(false)
+//   isDisclaimerAgreed  Boolean    @default(false)
+//   bankData            BankData[]
+//   accounts            Account[]
+//   withdraws           Withdraw[]
+//   Account             Account[]
+//   Order               Order[]
+
+// }
+model User {
+  id                  Int        @id @default(autoincrement())
+  firstName           String
+  lastName            String
+  email               String
+  phoneNumber         String
+  password            String
+  profileImg          String
+  gender              String
+  balance             Float      @default(0)
+  isWithdrawRequested Boolean
+  isBlocked           Boolean    @default(false)
+  isDisclaimerAgreed  Boolean    @default(false)
+  bankData            BankData[]
+  accounts            Account[]
+  withdraws           Withdraw[]
+  // orders              Order[]
+  Order               Order[]
+}
+
+model Order {
+  id         Int        @id @default(autoincrement())
+  account    Account    @relation(fields: [account_id], references: [id])
+  account_id Int
+  // seller     User       @relation("Seller", fields: [seller_id], references: [id])
+  seller_id  Int
+  price      Float
+  status     String
+  user       User       @relation(fields: [user_id], references: [id])
+  user_id    Int
+  Withdraw   Withdraw[]
+
+  @@map("Order")
+}
+
+model Withdraw {
+  id       Int      @id @default(autoincrement())
+  status   String
+  amount   Float
+  paidAt   DateTime
+  order    Order    @relation(fields: [order_id], references: [id])
+  order_id Int
+  user     User     @relation(fields: [user_id], references: [id])
+  user_id  Int
+}
+
+model Otp {
+  id          Int    @id @default(autoincrement())
+  value       String
+  phoneNumber String
+}
+
+model Partnership {
+  id    Int    @id @default(autoincrement())
+  title String
+  image String
+}
+
+model Silder {
+  id    Int    @id @default(autoincrement())
+  image String
+}
+
+model Transaction {
+  id     Int    @id @default(autoincrement())
+  amount String
+  type   String
+}
+
+model SiteData {
+  id              Int    @id @default(autoincrement())
+  logo            String
+  tax             String
+  termsConditions String
+}
+
+model FaQ {
+  id       Int    @id @default(autoincrement())
+  question String
+  answer   String
+}

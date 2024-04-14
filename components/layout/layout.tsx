@@ -1,3 +1,6 @@
+"use client";
+import { usePathname } from "next/navigation";
+
 import React from "react";
 import { useLockedBody } from "../hooks/useBodyLock";
 import { NavbarWrapper } from "../navbar/navbar";
@@ -9,6 +12,16 @@ interface Props {
 }
 
 export const Layout = ({ children }: Props) => {
+  const pathname = usePathname();
+
+  const sideNav =
+    !pathname.includes(`login`) &&
+    !pathname.includes(`signUp`) &&
+    !pathname.includes(`sighup`) &&
+    !pathname.includes(`auth`);
+
+  console.log(pathname, sideNav);
+
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
   const [_, setLocked] = useLockedBody(false);
   const handleToggleSidebar = () => {
@@ -24,8 +37,13 @@ export const Layout = ({ children }: Props) => {
       }}
     >
       <section className="flex">
-        <SidebarWrapper />
-        <NavbarWrapper>{children}</NavbarWrapper>
+        {!sideNav && children}
+        {sideNav && (
+          <>
+            <SidebarWrapper />
+            <NavbarWrapper>{children}</NavbarWrapper>
+          </>
+        )}
       </section>
     </SidebarContext.Provider>
   );

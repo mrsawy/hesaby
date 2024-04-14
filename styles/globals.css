@@ -1,26 +1,80 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+  @tailwind base;
+  @tailwind components;
+  @tailwind utilities;
+  /* @import 'tailwindcss/base';
+  @import 'tailwindcss/components';
+  @import './base.css';
+  @import 'tailwindcss/utilities';
+   */
+  @layer base {
+    :root {
+      --background: 0 0% 100%;
+      --foreground: 240 10% 3.9%;
 
-html,
-body {
-  padding: 0;
-  margin: 0;
-}
+      --card: 0 0% 100%;
+      --card-foreground: 240 10% 3.9%;
 
-* {
-  box-sizing: border-box;
-}
+      --popover: 0 0% 100%;
+      --popover-foreground: 240 10% 3.9%;
 
-/* .flex.w-screen.h-[100vh].fixed.inset-0.z-50.overflow-x-auto.justify-center[--scale-enter:100%][--scale-exit:100%][--slide-enter:0px][--slide-exit:80px]sm:[--scale-enter:100%]sm:[--scale-exit:103%]sm:[--slide-enter:0px]sm:[--slide-exit:0px]items-start.sm\:items-center { */
-/* Your CSS styles here */
+      --primary: 240 5.9% 10%;
+      --primary-foreground: 0 0% 98%;
 
-/* Your CSS styles here */
+      --secondary: 240 4.8% 95.9%;
+      --secondary-foreground: 240 5.9% 10%;
 
-div[tabindex="-1"] .flex.w-screen.inset-0.z-50:nth-child(2) {
-  z-index: 220 !important;
-}
-div[tabindex="-1"] .backdrop-opacity-disabled.w-screen.h-screen.fixed.inset-0.z-50:nth-child(1) {
-  z-index: 210 !important;
-}
+      --muted: 240 4.8% 95.9%;
+      --muted-foreground: 240 3.8% 46.1%;
 
+      --accent: 240 4.8% 95.9%;
+      --accent-foreground: 240 5.9% 10%;
+
+      --destructive: 0 84.2% 60.2%;
+      --destructive-foreground: 0 0% 98%;
+
+      --border: 240 5.9% 90%;
+      --input: 240 5.9% 90%;
+      --ring: 240 10% 3.9%;
+
+      --radius: 0.5rem;
+    }
+
+    .dark {
+      --background: 240 10% 3.9%;
+      --foreground: 0 0% 98%;
+
+      --card: 240 10% 3.9%;
+      --card-foreground: 0 0% 98%;
+
+      --popover: 240 10% 3.9%;
+      --popover-foreground: 0 0% 98%;
+
+      --primary: 0 0% 98%;
+      --primary-foreground: 240 5.9% 10%;
+
+      --secondary: 240 3.7% 15.9%;
+      --secondary-foreground: 0 0% 98%;
+
+      --muted: 240 3.7% 15.9%;
+      --muted-foreground: 240 5% 64.9%;
+
+      --accent: 240 3.7% 15.9%;
+      --accent-foreground: 0 0% 98%;
+
+      --destructive: 0 62.8% 30.6%;
+      --destructive-foreground: 0 0% 98%;
+
+      --border: 240 3.7% 15.9%;
+      --input: 240 3.7% 15.9%;
+      --ring: 240 4.9% 83.9%;
+    }
+  }
+
+  @layer base {
+    * {
+      @apply border-border;
+    }
+    body {
+      @apply bg-background text-foreground;
+    }
+  }

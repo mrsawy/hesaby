@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Avatar,
   Dropdown,
@@ -8,20 +10,49 @@ import {
   NavbarItem,
 } from "@nextui-org/react";
 import React from "react";
+import { usePathname } from "next/navigation";
+
 import { DarkModeSwitch } from "./darkmodeswitch";
 
 import Logo, { logoSrc, logoSrcDark } from "@/components/Logo";
 //
 import { useTheme as useNextTheme } from "next-themes";
 
-{
-  /* <Logo width={90} /> */
-}
-
-// import Logo from "@/components/Logo";
+import { getCookie, setCookie, deleteCookie } from "cookies-next";
+import { useRouter } from "next/navigation";
 
 export const UserDropdown = () => {
+  // const cookieStore = cookies();
+
+  const router = useRouter();
+  const adminLogOut = () => {
+    let adminToken = getCookie(`admin-token`)?.toString();
+    if (typeof adminToken == `undefined`) {
+      deleteCookie(`admin-token`);
+    }
+    if (typeof adminToken == `string`) {
+      deleteCookie(`admin-token`);
+    }
+
+    router.replace("/dashboard/login");
+    // return;
+  };
+
+  let adminToken = getCookie(`admin-token`)?.toString();
+
+  console.log(`adminToken from user deopdown`, adminToken);
+  const pathname = usePathname();
   const { theme } = useNextTheme();
+
+  const sideNav =
+    !pathname.includes(`login`) &&
+    !pathname.includes(`signUp`) &&
+    !pathname.includes(`sighup`) &&
+    !pathname.includes(`auth`);
+
+  if (!sideNav) {
+    return <></>;
+  }
   return (
     <Dropdown>
       <NavbarItem>
@@ -47,7 +78,7 @@ export const UserDropdown = () => {
         <DropdownItem key="system">System</DropdownItem>
         <DropdownItem key="configurations">Configurations</DropdownItem>
         <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem> */}
-        <DropdownItem key="logout" color="danger" className="text-danger ">
+        <DropdownItem onClick={adminLogOut} key="logout" color="danger" className="text-danger ">
           Log Out
         </DropdownItem>
         <DropdownItem key="switch">
