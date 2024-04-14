@@ -15,7 +15,7 @@ function Error({ error, reset }: { error: Error; reset: Function }) {
           <GlobeIcon className="h-4 w-4" />
           <AlertTitle>Wrong Credentials !</AlertTitle>
           <div className="flex gap-12 justify-between items-center">
-            <AlertDescription>{`${error}`}</AlertDescription>
+            <AlertDescription>Error : Invalid Email or password .</AlertDescription>
             <Button onClick={() => reset()}>Try Again</Button>
           </div>
         </Alert>

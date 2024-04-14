@@ -1,4 +1,6 @@
 import "@/styles/globals.css";
+import "sweetalert2/src/sweetalert2.scss";
+
 import type { Metadata } from "next";
 // import { Providers } from "./providers";
 import { fontSans } from "@/config/fonts";

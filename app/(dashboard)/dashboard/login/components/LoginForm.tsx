@@ -6,14 +6,22 @@ import { adminLogin } from "@/actions/admin";
 import { useFormState, useFormStatus } from "react-dom";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { useEffect, useState } from "react";
+import * as yup from "yup";
+import Swal from "sweetalert2";
+
+//
+const adminLoginSchema = yup.object().shape({
+  email: yup.string().email().required(),
+  password: yup.string().min(6).required(),
+});
 
 export default function LoginForm() {
   const adminLoginAction = (state: void | null, formData: FormData) => adminLogin(formData);
   //
   const [state, dispatchAction] = useFormState(adminLoginAction, null);
   const [loading, setLoading] = useState(false);
-  //
   const { pending, data, method, action } = useFormStatus();
+  //
   //
 
   return (
@@ -21,6 +29,30 @@ export default function LoginForm() {
       action={dispatchAction}
       onSubmit={(e) => {
         setLoading(true);
+        const form = e.target as HTMLFormElement;
+        const emailInput = form.elements.namedItem("email") as HTMLInputElement;
+        const passwordInput = form.elements.namedItem("password") as HTMLInputElement;
+        const email = emailInput.value;
+        const password = passwordInput.value;
+        try {
+          adminLoginSchema.validateSync({ email, password }, { abortEarly: false });
+        } catch (error: any) {
+          e.preventDefault();
+          setLoading(false);
+          if (error instanceof yup.ValidationError) {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: error.errors[0] ?? "",
+            });
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: error?.message ?? "",
+            });
+          }
+        }
       }}
     >
       <div className="pb-4">

@@ -21,12 +21,8 @@ const fontSans = FontSans({
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className={cn("font-sans antialiased", fontSans.className)}>
-        <Providers>
-          <Layout>{children}</Layout>
-        </Providers>
-      </body>
-    </html>
+    <Providers>
+      <Layout>{children}</Layout>
+    </Providers>
   );
 }
