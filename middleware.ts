@@ -6,7 +6,7 @@ const JWT_SECRET_ADMIN: string = process.env.JWT_SECRET_ADMIN as string;
 
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
-  if (request.nextUrl.pathname.includes(`login`)) {
+  if (request.nextUrl.pathname.includes(`/dashboard/login`)) {
     return;
   }
   if (!request.cookies.has("admin-token")) {
