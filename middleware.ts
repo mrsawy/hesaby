@@ -23,6 +23,8 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL("/dashboard/login", request.url));
     }
   }
+
+  return;
 }
 // See "Matching Paths" below to learn more
 export const config = {
