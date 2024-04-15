@@ -8,7 +8,7 @@ import clsx from "clsx";
 import Head from "next/head";
 
 export const metadata: Metadata = {
-  title: "Dashboard",
+  title: "Hesaby",
   description: "Hesaby Dashboard",
 };
 

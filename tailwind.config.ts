@@ -1,4 +1,6 @@
 import { nextui } from "@nextui-org/react";
+// import flowbite from "flowbite-react/tailwind";
+const flowbite = require("flowbite-react/tailwind");
 
 const { default: flattenColorPalette } = require("tailwindcss/lib/util/flattenColorPalette");
 
@@ -12,10 +14,11 @@ const config: Config = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
-
+    "./node_modules/flowbite/**/*.js",
     // Or if using `src` directory:
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
+    flowbite.content(),
   ],
 
   prefix: "",
@@ -88,7 +91,7 @@ const config: Config = {
     },
   },
   // darkMode: "class",
-  plugins: [require("tailwindcss-animate"), nextui(), addVariablesForColors],
+  plugins: [require("tailwindcss-animate"), nextui(), addVariablesForColors, flowbite.plugin()],
 };
 
 export default config;
