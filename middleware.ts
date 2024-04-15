@@ -18,7 +18,9 @@ export async function middleware(request: NextRequest) {
     if (typeof tokenCookie?.value == `string`) {
       const { payload } = await jwtVerify(
         tokenCookie.value,
-        new TextEncoder().encode(JWT_SECRET_ADMIN)
+        new TextEncoder().encode(
+          JWT_SECRET_ADMIN.length > 0 ? JWT_SECRET_ADMIN : "pshviroessing-environ"
+        )
       );
       if (!payload) {
         return NextResponse.redirect(new URL("/dashboard/login", request.url));
@@ -27,7 +29,7 @@ export async function middleware(request: NextRequest) {
 
     return;
   } catch (error) {
-    console.log(error)
+    console.log(error);
     // return NextResponse.redirect(new URL("/dashboard/login", request.url));
   }
 }
