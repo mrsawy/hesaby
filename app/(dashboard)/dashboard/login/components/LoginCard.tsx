@@ -10,27 +10,33 @@ import { redirect } from "next/navigation";
 
 import LoginForm from "./LoginForm";
 
-const JWT_SECRET_ADMIN: string = process.env.JWT_SECRET_ADMIN as string;
+// const JWT_SECRET_ADMIN: string = process.env.JWT_SECRET_ADMIN as string;
 
 async function LoginCard() {
-  const cookieStore = cookies();
+  try {
+    const cookieStore = cookies();
 
-  if (cookieStore.has(`admin-token`) && cookieStore.get("admin-token")) {
-    const adminToken = cookieStore.get("admin-token");
-    const { payload } = await jwtVerify(
-      `${adminToken?.value || ``}`,
-      new TextEncoder().encode(JWT_SECRET_ADMIN)
-    );
-    if (payload) {
-      let foundedAdmin = await prisma.admin.findFirst({
-        where: {
-          email: `${payload?.email || ``} `,
-        },
-      });
-      if (foundedAdmin) {
-        return redirect(`/dashboard`);
+    if (cookieStore.has(`admin-token`) && cookieStore.get("admin-token")) {
+      const adminToken = cookieStore.get("admin-token");
+      const { payload } = await jwtVerify(
+        `${adminToken?.value || ``}`,
+        new TextEncoder().encode(
+          process.env.JWT_SECRET_ADMIN ? process.env.JWT_SECRET_ADMIN : "pshviroessing-environ"
+        )
+      );
+      if (payload) {
+        let foundedAdmin = await prisma.admin.findFirst({
+          where: {
+            email: `${payload?.email || ``} `,
+          },
+        });
+        if (foundedAdmin) {
+          return redirect(`/dashboard`);
+        }
       }
     }
+  } catch (error) {
+    console.log(error);
   }
   return (
     <Card className="py-4 min-w-[400px] ">
