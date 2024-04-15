@@ -4,8 +4,23 @@ import LoginCard from "./components/LoginCard";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { GlobeIcon } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
+import { getCookie, setCookie, deleteCookie } from "cookies-next";
+
+// import cookies from 'next-cookies';
 
 function Error({ error, reset }: { error: Error; reset: Function }) {
+  const deleteAdminCookie = () => {
+    if (getCookie(`admin-token`)) {
+      let adminToken = getCookie(`admin-token`)?.toString() || null;
+      if (typeof adminToken == `undefined`) {
+        deleteCookie(`admin-token`);
+      }
+      if (typeof adminToken == `string`) {
+        deleteCookie(`admin-token`);
+      }
+    }
+  };
+
   console.log(error);
   return (
     <div className="h-screen  w-full flex justify-center items-center">
@@ -16,7 +31,14 @@ function Error({ error, reset }: { error: Error; reset: Function }) {
           <AlertTitle>Wrong Credentials !</AlertTitle>
           <div className="flex gap-12 justify-between items-center">
             <AlertDescription>Error : Invalid Email or password .</AlertDescription>
-            <Button onClick={() => reset()}>Try Again</Button>
+            <Button
+              onClick={() => {
+                deleteAdminCookie();
+                reset();
+              }}
+            >
+              Try Again
+            </Button>
           </div>
         </Alert>
       </div>
