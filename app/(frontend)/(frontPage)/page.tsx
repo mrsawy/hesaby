@@ -2,13 +2,13 @@
 import HeroSection from "./sections/HeroSection";
 import MaskSection from "./sections/MaskSection";
 import GlobeSection from "./sections/GlobeSection";
-import FrontNav from "@/components/front-navbar/FrontNav";
+// import FrontNav from "@/components/front-navbar/FrontNav";
 import Footer from "@/components/footer/footer";
 
 function page() {
   return (
     <div>
-      <FrontNav />
+      {/* <FrontNav /> */}
       <HeroSection />
       <GlobeSection className="sm:mb-40" />
       <MaskSection />

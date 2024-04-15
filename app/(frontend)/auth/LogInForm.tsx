@@ -26,7 +26,7 @@ export default function LogInForm() {
       }}
       in={!inProp}
     >
-      <form action="" className={`${classes.form_container} ${classes.form} sm:p-4 `}>
+      <form action="" className={`${classes.form_container} ${classes.form} sm:p-4  mt-[4rem] `}>
         <div className={classes.center_container}>
           <div className={classes.login_signup}>
             <p
