@@ -28,7 +28,7 @@ export async function middleware(request: NextRequest) {
     return;
   } catch (error) {
     console.log(error)
-    return NextResponse.redirect(new URL("/dashboard/login", request.url));
+    // return NextResponse.redirect(new URL("/dashboard/login", request.url));
   }
 }
 // See "Matching Paths" below to learn more
