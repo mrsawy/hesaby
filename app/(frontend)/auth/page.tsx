@@ -3,7 +3,7 @@ import OverLay from "./OverLay";
 
 export default function Auth() {
   return (
-    <OverLay>
+    <OverLay className="p-3">
       <LogInForm />
     </OverLay>
   );
