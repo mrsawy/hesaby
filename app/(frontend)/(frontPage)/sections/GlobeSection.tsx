@@ -401,7 +401,7 @@ export default function GlobeDemo({ className }: { className?: string }) {
         className
       }
     >
-      <div className="max-w-7xl mx-auto w-full relative overflow-hidden h-full md:h-[40rem] px-4">
+      <div className="max-w-7xl mx-auto w-full relative overflow-hidden h-full  md:h-[60rem] px-4">
         <motion.div
           initial={{
             opacity: 0,
@@ -424,8 +424,8 @@ export default function GlobeDemo({ className }: { className?: string }) {
           </p>
         </motion.div>
         <div className="absolute w-full bottom-0 inset-x-0 h-40 bg-gradient-to-b pointer-events-none select-none from-transparent dark:to-black to-white z-40" />
-        <div className="absolute w-full -bottom-20 h-72 md:h-full z-10">
-          <World data={sampleArcs} globeConfig={globeConfig} />;
+        <div className="absolute w-full -bottom-20 h-72 md:h-full z-10 translate-y-[-43px] sm:translate-y-[0px]">
+          <World data={sampleArcs} globeConfig={globeConfig} />
         </div>
       </div>
     </div>
