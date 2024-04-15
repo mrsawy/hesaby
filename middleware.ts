@@ -19,7 +19,9 @@ export async function middleware(request: NextRequest) {
       const { payload } = await jwtVerify(
         tokenCookie.value,
         new TextEncoder().encode(
-          JWT_SECRET_ADMIN.length > 0 ? JWT_SECRET_ADMIN : "pshviroessing-environ"
+          JWT_SECRET_ADMIN && `${JWT_SECRET_ADMIN}`.length > 0
+            ? JWT_SECRET_ADMIN
+            : "pshviroessing-environ"
         )
       );
       if (!payload) {
