@@ -29,8 +29,9 @@ const SliderSection = () => {
       // animation="openAnimation"
       className="2xl:h-[96vh]"
     >
-      {sliderContent.map(({ background, titleAsImage, price, url }) => (
+      {sliderContent.map(({ background, titleAsImage, price, url, id }) => (
         <div
+          key={id}
           data-src={background}
           className="w-full md:ps-32 md:pe-32  text-end flex justify-end  pt-24 md:pt-0"
         >

@@ -15,7 +15,7 @@ import addNewSubmitHandler from "@/lib/addNewSubmitHandler";
 import addNewAction from "@/actions/admin/addNew";
 import TableName from "@/types/table-names";
 
-export const addNew = ({
+export const AddNew = ({
   label,
   inputs,
   tableName,
@@ -78,6 +78,7 @@ export const addNew = ({
                     {inputs.map((input) => {
                       return (
                         <InputLight
+                          key={input?.name}
                           placeholder={input?.title}
                           type={input?.type}
                           name={input?.name}
@@ -104,4 +105,4 @@ export const addNew = ({
   );
 };
 
-export default addNew;
+export default AddNew;

@@ -54,7 +54,7 @@ export const Accounts = () => {
         </div>
       </div>
       <div className="max-w-[95rem] mx-auto w-full">
-        <TableWrapper />
+        {/* <TableWrapper /> */}
       </div>
     </div>
   );
