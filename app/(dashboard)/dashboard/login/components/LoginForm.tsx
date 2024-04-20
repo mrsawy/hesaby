@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input as LightInput } from "@/components/ui/input-light";
-import { adminLogin } from "@/actions/admin";
+import { adminLogin } from "@/actions/admin/admin";
 import { useFormState, useFormStatus } from "react-dom";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { useEffect, useState } from "react";
@@ -21,8 +21,7 @@ export default function LoginForm() {
   const [state, dispatchAction] = useFormState(adminLoginAction, null);
   const [loading, setLoading] = useState(false);
   const { pending, data, method, action } = useFormStatus();
-  //
-  //
+ 
 
   return (
     <form
@@ -34,6 +33,9 @@ export default function LoginForm() {
         const passwordInput = form.elements.namedItem("password") as HTMLInputElement;
         const email = emailInput.value;
         const password = passwordInput.value;
+
+        // const { email, password } = getFormInputValues(e.target as HTMLFormElement, ["email", "password"]);
+
         try {
           adminLoginSchema.validateSync({ email, password }, { abortEarly: false });
         } catch (error: any) {

@@ -1,4 +1,3 @@
-
 "use client";
 
 import React from "react";
@@ -23,6 +22,9 @@ import { useSidebarContext } from "../layout/layout-context";
 import { ChangeLogIcon } from "../icons/sidebar/changelog-icon";
 import { usePathname } from "next/navigation";
 //
+import VideogameAssetIcon from "@mui/icons-material/VideogameAsset";
+import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
+//
 import Logo from "@/components/Logo";
 import { DarkModeSwitch } from "../navbar/darkmodeswitch";
 
@@ -32,7 +34,7 @@ export const SidebarWrapper = () => {
   const { collapsed, setCollapsed } = useSidebarContext();
 
   return (
-    <aside className="h-screen z-[202] sticky top-0">
+    <aside className="h-screen z-[41] sticky top-0">
       {collapsed ? <div className={Sidebar.Overlay()} onClick={setCollapsed} /> : null}
       <div
         className={Sidebar({
@@ -52,14 +54,20 @@ export const SidebarWrapper = () => {
                 href="/dashboard/users"
                 icon={<CustomersIcon />}
               />
+              <SidebarItem
+                isActive={pathname === "/platform"}
+                title="platforms"
+                href="/dashboard/platform"
+                icon={<VideogameAssetIcon className="text-gray-400" />}
+              />
               <CollapseItems
-                icon={<ProductsIcon />}
+                icon={<SportsEsportsIcon className="text-gray-400" />}
                 items={[
-                  { text: "Active", href: `/dashboard/products/active` },
-                  { text: "Pending", href: `/dashboard/products/pending` },
-                  { text: "Refused", href: "/dashboard/products/refused" },
+                  { text: "Active", href: `/dashboard/accounts/active` },
+                  { text: "Pending", href: `/dashboard/accounts/pending` },
+                  { text: "Refused", href: "/dashboard/accounts/refused" },
                 ]}
-                title="products"
+                title="Accounts"
               />
               {/* <SidebarItem
                 isActive={pathname === "/products"}

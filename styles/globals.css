@@ -83,3 +83,16 @@
   background: rgb(44, 44, 44);
   color: aliceblue;
 }
+
+/* 
+.backdrop-opacity-disabled{
+  z-index: 300;
+}
+
+
+.opacity-disabled + div.z-50 {
+  z-index: 400; 
+}
+  */
+
+/* Styles for the next element */

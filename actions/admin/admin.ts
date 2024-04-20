@@ -3,15 +3,11 @@ import * as yup from "yup";
 import bcrypt from "bcrypt";
 import prisma from "@/prisma/db";
 import { cookies } from "next/headers";
-import jwt from "jsonwebtoken";
-import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { jwtVerify, SignJWT } from "jose";
-// import { createSecretKey } from "crypto";
 
 //
-// const JWT_SECRET = process.env.JWT_SECRET;
 const JWT_SECRET_ADMIN: string = process.env.JWT_SECRET_ADMIN as string;
 
 //
@@ -19,25 +15,14 @@ const adminLoginSchema = yup.object().shape({
   password: yup.string().min(6).required(),
   email: yup.string().email().required(),
 });
-//
-// function waitForFourSeconds() {
-//   return new Promise(resolve => {
-//     setTimeout(() => {
-//       resolve(`done`);
-//     }, 4000); // 4000 milliseconds = 4 seconds
-//   });
-// }
 async function adminLogin(formData: FormData) {
   try {
-    // await waitForFourSeconds();
 
     const rawFormData = {
       email: formData.get("email") as string,
       password: formData.get("password") as string,
     };
     await adminLoginSchema.validate(rawFormData, { abortEarly: false });
-
-    // console.log(rawFormData, rawFormData.email);
     const admin = await prisma.admin.findFirst({
       where: {
         email: rawFormData.email,
@@ -72,8 +57,28 @@ async function adminLogin(formData: FormData) {
       throw new Error(error.message);
     }
   }
-  // revalidatePath(`/dashboard`);
   redirect(`/dashboard`);
 }
+// 
+export async function addNewAction() {}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 export { adminLogin };
