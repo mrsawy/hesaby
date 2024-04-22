@@ -15,7 +15,7 @@
 /out/
 
 
-
+.env
 # production
 /build
 
