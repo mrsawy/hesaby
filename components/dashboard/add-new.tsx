@@ -45,8 +45,6 @@ export const AddNew = ({
                       e.target as HTMLFormElement,
                       inputs?.map((i) => i?.name)
                     );
-
-                    console.log(formValues);
                     if (Object.values(formValues).some((v) => !v)) {
                       Swal.fire({
                         icon: "error",
@@ -56,20 +54,7 @@ export const AddNew = ({
                       e.preventDefault();
                       return;
                     }
-
-                    let rawData = getFormData(
-                      e.target as HTMLFormElement,
-                      inputs?.map((i) => i?.name)
-                    );
-
                     addOpt(formValues);
-                    // Object.values(rawData).forEach((data) => {
-                    // });
-                    // async (formData: FormData) => {
-                    // const message = formData.get('message')
-                    // addOptimisticMessage(message)
-                    // await send(message)
-
                     onClose();
                   }}
                 >

@@ -7,14 +7,15 @@ import { DeleteIcon } from "@/components/icons/table/delete-icon";
 import { EditIcon } from "@/components/icons/table/edit-icon";
 
 const BodyComponentRenderFunction = (ele: {
-  platformImg: string;
+  gameImg: string;
   title: string;
   description: string;
+  platform?: { title: string };
 }) => {
-  console.log(`ele=>`, ele);
+  console.log(`gamer render cell =>=>`, ele);
   let imageUrl;
   try {
-    imageUrl = ele?.platformImg ? ele?.platformImg : ``;
+    imageUrl = ele?.gameImg ? ele?.gameImg : ``;
   } catch (err) {
     console.log(err);
     imageUrl = null;
@@ -32,6 +33,9 @@ const BodyComponentRenderFunction = (ele: {
       </TableCell>
       <TableCell>
         <div>{ele?.description}</div>
+      </TableCell>
+      <TableCell>
+        <div>{ele?.platform?.title ? ele?.platform?.title : `N/A`}</div>
       </TableCell>
       <TableCell>
         <div>

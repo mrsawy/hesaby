@@ -56,9 +56,15 @@ export const SidebarWrapper = () => {
               />
               <SidebarItem
                 isActive={pathname === "/platform"}
-                title="platforms"
+                title="Platforms"
                 href="/dashboard/platform"
                 icon={<VideogameAssetIcon className="text-gray-400" />}
+              />
+                  <SidebarItem
+                isActive={pathname === "/game"}
+                title="Games"
+                href="/dashboard/game"
+                icon={<SportsEsportsIcon className="text-gray-400" />}
               />
               <CollapseItems
                 icon={<SportsEsportsIcon className="text-gray-400" />}
