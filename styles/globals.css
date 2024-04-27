@@ -71,9 +71,9 @@
 }
 
 @layer base {
-  * {
+  /* * {
     @apply border-border;
-  }
+  } */
   body {
     @apply bg-background text-foreground;
   }
@@ -96,3 +96,32 @@
   */
 
 /* Styles for the next element */
+
+.outline-none-child-textarea textarea {
+  outline: none;
+}
+.border-none-child-textarea textarea {
+  border: none;
+}
+
+.w-full-none-child-textarea {
+  width: 100%;
+}
+
+.filepond--credits {
+  display: none !important;
+}
+/* .h-full-child-textarea * {
+  height: 100%;
+} */
+
+.sell-account-modal .p-dialog-header {
+  display: none !important;
+}
+
+.sell-account-modal .p-dialog-content {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  outline: none;
+}

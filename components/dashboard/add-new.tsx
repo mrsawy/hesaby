@@ -14,6 +14,7 @@ import Swal from "sweetalert2";
 import addNewSubmitHandler from "@/lib/addNewSubmitHandler";
 import addNewAction from "@/actions/admin/addNew";
 import TableName from "@/types/table-names";
+import { Select, SelectItem } from "@nextui-org/select";
 
 export const AddNew = ({
   label,
@@ -31,7 +32,7 @@ export const AddNew = ({
   return (
     <div>
       <>
-        <Button onPress={onOpen} color="primary">
+        <Button onPress={onOpen} color="primary" className="p-3">
           {label}
         </Button>
         <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
@@ -45,11 +46,13 @@ export const AddNew = ({
                       e.target as HTMLFormElement,
                       inputs?.map((i) => i?.name)
                     );
-                    if (Object.values(formValues).some((v) => !v)) {
+                    // console.log(formValues);
+
+                    if (Object.values(formValues).some((v) => !v || v?.length === 0)) {
                       Swal.fire({
                         icon: "error",
                         title: "Oops...",
-                        text: "All Fields Are Required",
+                        text: "All Fields Are Required !",
                       });
                       e.preventDefault();
                       return;
@@ -73,10 +76,10 @@ export const AddNew = ({
                     })}
                   </ModalBody>
                   <ModalFooter>
-                    <Button color="danger" variant="flat" onClick={onClose}>
+                    <Button color="danger" variant="flat" onClick={onClose} className="p-2 px-3">
                       Close
                     </Button>
-                    <Button color="primary" type="submit">
+                    <Button color="primary" type="submit" className="p-2 px-3">
                       Add
                     </Button>
                   </ModalFooter>

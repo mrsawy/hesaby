@@ -5,6 +5,7 @@ import Image from "next/image";
 import { User, Tooltip, Chip } from "@nextui-org/react";
 import { DeleteIcon } from "@/components/icons/table/delete-icon";
 import { EditIcon } from "@/components/icons/table/edit-icon";
+import { isValidUrl } from "@/lib/utils";
 
 const BodyComponentRenderFunction = (ele: {
   gameImg: string;
@@ -25,7 +26,14 @@ const BodyComponentRenderFunction = (ele: {
     <TableRow>
       <TableCell>
         <div className="w-[50px] h-[50px] overflow-hidden rounded-full">
-          {imageUrl && <Image fill src={imageUrl} alt={`platform image`} />}
+          {imageUrl && isValidUrl(imageUrl) && (
+            <Image
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 75vw, 50vw"
+              fill
+              src={imageUrl}
+              alt={`platform image`}
+            />
+          )}
         </div>
       </TableCell>
       <TableCell>
@@ -34,9 +42,7 @@ const BodyComponentRenderFunction = (ele: {
       <TableCell>
         <div>{ele?.description}</div>
       </TableCell>
-      <TableCell>
-        <div>{ele?.platform?.title ? ele?.platform?.title : `N/A`}</div>
-      </TableCell>
+
       <TableCell>
         <div>
           <div className="flex items-center gap-4 ">

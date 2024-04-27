@@ -27,10 +27,11 @@ const content: SliderContent = [
     background: `/slider/bg.jpg`,
     price: `120`,
     url: `http://localhost:3000/`,
+    titleAsImage: `/slider/spiderTitleImage.png`,
   },
   {
     id: `4`,
-
+    titleAsImage: `/slider/spiderTitleImage.png`,
     background: `/slider/spider.jpg`,
     price: `120`,
     url: `http://localhost:3000/`,

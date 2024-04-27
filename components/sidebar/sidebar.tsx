@@ -17,6 +17,7 @@ import { SettingsIcon } from "../icons/sidebar/settings-icon";
 import { CollapseItems } from "./collapse-items";
 import { SidebarItem } from "./sidebar-item";
 import { SidebarMenu } from "./sidebar-menu";
+import GamepadIcon from "@mui/icons-material/Gamepad";
 import { FilterIcon } from "../icons/sidebar/filter-icon";
 import { useSidebarContext } from "../layout/layout-context";
 import { ChangeLogIcon } from "../icons/sidebar/changelog-icon";
@@ -60,13 +61,19 @@ export const SidebarWrapper = () => {
                 href="/dashboard/platform"
                 icon={<VideogameAssetIcon className="text-gray-400" />}
               />
-                  <SidebarItem
+              <SidebarItem
                 isActive={pathname === "/game"}
                 title="Games"
                 href="/dashboard/game"
+                icon={<GamepadIcon className="text-gray-400" />}
+              />
+              <SidebarItem
+                isActive={pathname === "/account"}
+                title="Accounts"
+                href="/dashboard/account"
                 icon={<SportsEsportsIcon className="text-gray-400" />}
               />
-              <CollapseItems
+              {/* <CollapseItems
                 icon={<SportsEsportsIcon className="text-gray-400" />}
                 items={[
                   { text: "Active", href: `/dashboard/accounts/active` },
@@ -74,7 +81,7 @@ export const SidebarWrapper = () => {
                   { text: "Refused", href: "/dashboard/accounts/refused" },
                 ]}
                 title="Accounts"
-              />
+              /> */}
               {/* <SidebarItem
                 isActive={pathname === "/products"}
                 title="Products"

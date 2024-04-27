@@ -33,7 +33,7 @@ const SliderSection = () => {
         <div
           key={id}
           data-src={background}
-          className="w-full md:ps-32 md:pe-32  text-end flex justify-end  pt-24 md:pt-0"
+          className="w-full md:ps-32 md:pe-32  text-end flex justify-end  pt-12 md:pt-0"
         >
           <div className=" text-center m-1 w-1/3 flex flex-col gap-4 justify-center items-center  ">
             <Image

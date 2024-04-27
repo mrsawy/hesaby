@@ -14,45 +14,42 @@ datasource db {
 }
 
 model Admin {
-  id           Int     @id @default(autoincrement())
+  id           String  @id @default(cuid())
   name         String?
   email        String
   phoneNumber  String?
   profilePhoto String?
   password     String
   isSuper      Boolean @default(false)
-  // percentage   Float
 }
 
 model BankData {
-  id                Int    @id @default(autoincrement())
+  id                String @id @default(cuid())
   ibanNumber        String
   bankName          String
   accountHolderName String
   user              User   @relation(fields: [user_id], references: [id])
-  user_id           Int
+  user_id           String
 }
 
 model Game {
-  id                Int       @id @default(autoincrement())
-  title             String
-  describtion       String
-  gameImg           String?
-  platform          Platform? @relation(fields: [platform_id], references: [id])
-  platform_id       Int
-  accounts          Account[]
+  id          String    @id @default(cuid())
+  title       String
+  description String
+  gameImg     String?
+  accounts    Account[]
 }
 
 model Platform {
-  id              Int    @id @default(autoincrement())
-  title           String?
-  description     String?
-  platformImg     String?
-  games           Game[]
+  id          String    @id @default(cuid())
+  title       String?
+  description String?
+  platformImg String?
+  accounts    Account[]
 }
 
 model Account {
-  id             Int            @id @default(autoincrement())
+  id             String         @id @default(cuid())
   status         String
   title          String
   description    String
@@ -61,124 +58,125 @@ model Account {
   password       String
   rejectedReason String?
   price          Float
-  tax            Float
-  finalPrice     Float
   game           Game           @relation(fields: [game_id], references: [id])
-  game_id        Int
+  platform       Platform       @relation(fields: [platform_id], references: [id])
+  game_id        String
+  platform_id    String
   seller         User           @relation(fields: [seller_id], references: [id])
-  seller_id      Int
+  accountImg     String
+  seller_id      String
   accountImages  AccountImage[]
   orders         Order[]
-  // User           User?          @relation(fields: [userId], references: [id])
-  // userId         Int?
 }
 
 model AccountImage {
-  id         Int     @id @default(autoincrement())
-  url        String
-  alt        String
+  id         String  @id @default(cuid())
+  image      String
   account    Account @relation(fields: [account_id], references: [id])
-  account_id Int
+  account_id String
 }
 
-// model User {
-//   id                  Int        @id @default(autoincrement())
-//   firstName           String
-//   lastName            String
-//   email               String
-//   phoneNumber         String
-//   password            String
-//   profileImg          String
-//   gender              String
-//   balance             Float      @default(0)
-//   isWithdrawRequested Boolean
-//   isBlocked           Boolean    @default(false)
-//   isDisclaimerAgreed  Boolean    @default(false)
-//   bankData            BankData[]
-//   accounts            Account[]
-//   withdraws           Withdraw[]
-//   Account             Account[]
-//   Order               Order[]
-
-// }
 model User {
-  id                  Int        @id @default(autoincrement())
+  id                  String     @id @default(cuid())
   firstName           String
   lastName            String
   email               String
   phoneNumber         String
   password            String
   profileImg          String?
-  // gender              String
   balance             Float?     @default(0)
   isWithdrawRequested Boolean?   @default(false)
   isBlocked           Boolean?   @default(false)
-  // isDisclaimerAgreed  Boolean    @default(false)
   bankData            BankData[]
   accounts            Account[]
   withdraws           Withdraw[]
-  // orders              Order[]
   Order               Order[]
+  emailVerified       DateTime?
+  createdAt           DateTime   @default(now())
+  updatedAt           DateTime   @default(now()) @updatedAt
 }
 
+// 
+// model Session {
+//   id           String   @id @default(cuid())
+//   userId       String
+//   expires      DateTime
+//   sessionToken String   @unique
+//   accessToken  String   @unique
+//   createdAt    DateTime @default(now())
+//   updatedAt    DateTime @default(now()) @updatedAt
+//   user         User     @relation(fields: [userId], references: [id])
+// }
+
+// model VerificationRequest {
+// id         String   @id @default(cuid())
+//   identifier String
+//   token      String   @unique
+//   expires    DateTime
+//   createdAt  DateTime @default(now())
+//   updatedAt  DateTime @default(now()) @updatedAt
+
+//   @@unique([identifier, token])
+// }
+
+// 
 model Order {
-  id         Int        @id @default(autoincrement())
+  id         String     @id @default(cuid())
   account    Account    @relation(fields: [account_id], references: [id])
-  account_id Int
-  // seller     User       @relation("Seller", fields: [seller_id], references: [id])
-  seller_id  Int
+  account_id String
+  seller_id  String
   price      Float
   status     String
   user       User       @relation(fields: [user_id], references: [id])
-  user_id    Int
+  user_id    String
   Withdraw   Withdraw[]
 
   @@map("Order")
 }
 
 model Withdraw {
-  id       Int      @id @default(autoincrement())
+  id       String   @id @default(cuid())
   status   String
   amount   Float
   paidAt   DateTime
   order    Order    @relation(fields: [order_id], references: [id])
-  order_id Int
+  order_id String
   user     User     @relation(fields: [user_id], references: [id])
-  user_id  Int
+  user_id  String
 }
 
-model Otp {
-  id          Int    @id @default(autoincrement())
-  value       String
-  phoneNumber String
-}
+// model Otp {
+//   id          Int    @id @default(autoincrement())
+//   value       String
+//   phoneNumber String
+// }
 
 model Partnership {
-  id    Int    @id @default(autoincrement())
+  id    String @id @default(cuid())
   title String
   image String
 }
 
 model Silder {
-  id    Int    @id @default(autoincrement())
+  id    String @id @default(cuid())
   image String
 }
 
 model Transaction {
-  id     Int    @id @default(autoincrement())
+  id     String @id @default(cuid())
   amount String
   type   String
 }
 
 model SiteData {
-  id              Int    @id @default(autoincrement())
+  id              String @id @default(cuid())
   logo            String
   tax             String
   termsConditions String
 }
 
 model FaQ {
-  id       Int    @id @default(autoincrement())
+  id       String @id @default(cuid())
   question String
   answer   String
 }

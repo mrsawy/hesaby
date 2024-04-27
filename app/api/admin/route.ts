@@ -45,7 +45,6 @@ export async function POST(request: Request) {
     });
 
     return NextResponse.json(newAdmin);
-
   } catch (error: any) {
     if (error instanceof yup.ValidationError) {
       const yupErrors = error.errors;

@@ -79,17 +79,6 @@ async function handleUploadFiles({
     Body: buffer,
   });
   await s3.send(command);
-
-  // let path = join(
-  //   process.cwd(),
-  //   `public`,
-  //   tableName,
-  //   `${identifier}_${generateUniqueId()}_${filename}`
-  // );
-  // let result = await writeFile(path, buffer);
-
-  // let reachablePath = path.split(`public`)[1];
-
   return { path: filename };
 }
 

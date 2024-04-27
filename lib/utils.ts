@@ -49,3 +49,12 @@ export function wait(seconds: number) {
     }, seconds * 1000); // 4000 milliseconds = 4 seconds
   });
 }
+
+export function isValidUrl(url: string): boolean {
+  try {
+    return url?.startsWith("http://") || url?.startsWith("https://") || url?.startsWith("/");
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+}

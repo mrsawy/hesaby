@@ -6,14 +6,19 @@ import { HouseIcon } from "@/components/icons/breadcrumb/house-icon";
 import { TableWrapper } from "@/components/table/table";
 import AddNew from "@/components/dashboard/add-new";
 import RenderCell from "./render-cell";
-
 //
-export const Games = ({ tableData }: { tableData?: any }) => {
+type Props = {
+  tableData?: any;
+};
+//
+export const Games = ({ tableData }: Props) => {
   const [optData, addOptData] = useOptimistic(tableData, (state, newData) => [...state, newData]);
+
+
   const inputs = [
     { title: `Title`, name: `title`, type: `text` },
     { title: `Description`, name: `description`, type: `text` },
-    { title: `Platform`, name: `platform_id`, type: `text` },
+    // { title: `Platform`, name: `platform_id`, type: `select`, options },
     { title: `Game Image`, name: `gameImg`, type: `file`, multiple: false },
   ];
 
@@ -44,12 +49,7 @@ export const Games = ({ tableData }: { tableData?: any }) => {
           />
         </div> */}
         <div className="flex flex-row gap-3.5 flex-wrap ml-auto">
-          <AddNew
-            addOpt={addOptData}
-            tableName={`game`}
-            inputs={inputs}
-            label="Add New Game"
-          />
+          <AddNew addOpt={addOptData} tableName={`game`} inputs={inputs} label="Add New Game" />
         </div>
       </div>
       <div className="max-w-[95rem] mx-auto w-full">

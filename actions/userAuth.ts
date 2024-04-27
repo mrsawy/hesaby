@@ -1,5 +1,7 @@
 "use server";
 
+import { NextResponse, NextRequest } from "next/server";
+
 import * as yup from "yup";
 import bcrypt from "bcrypt";
 import prisma from "@/prisma/db";
@@ -15,16 +17,6 @@ import { jwtVerify, SignJWT } from "jose";
 // const JWT_SECRET = process.env.JWT_SECRET;
 const JWT_SECRET: string = process.env.JWT_SECRET as string;
 const ROUNDS_OF_HASHING = Number(process.env.ROUNDS_OF_HASHING);
-
-//
-//
-// function waitForFourSeconds() {
-//   return new Promise(resolve => {
-//     setTimeout(() => {
-//       resolve(`done`);
-//     }, 4000); // 4000 milliseconds = 4 seconds
-//   });
-// }
 
 async function loginAction(formData: FormData) {
   try {
@@ -51,14 +43,16 @@ async function loginAction(formData: FormData) {
     if (!res) {
       throw new Error(`Wrong Password`);
     }
-    if (res) {
-      const token = await new SignJWT({ email: user.email, password: rawFormData.password })
-        .setProtectedHeader({ alg: "HS256" })
-        .setExpirationTime("1y")
-        .sign(new TextEncoder().encode(JWT_SECRET));
+    const token = await new SignJWT({ email: user.email, password: rawFormData.password })
+      .setProtectedHeader({ alg: "HS256" })
+      .setExpirationTime("1y")
+      .sign(new TextEncoder().encode(JWT_SECRET));
 
-      cookies().set(`token`, token);
-    }
+    cookies().set(`hesaby-user-token`, token);
+
+    return { user };
+    // revalidatePath(`/`);
+    // redirect(`/`);
   } catch (error: any) {
     if (error instanceof yup.ValidationError) {
       // Handle validation errors
@@ -70,8 +64,8 @@ async function loginAction(formData: FormData) {
       throw new Error(error.message);
     }
   }
-  // revalidatePath(`/dashboard`);
-  redirect(`/`);
+  // return
+  // redirect(`/`);
 }
 
 async function signUpAction(formData: FormData) {
@@ -107,7 +101,7 @@ async function signUpAction(formData: FormData) {
       },
     });
 
-    console.log(`newUser`, newUser);
+    // console.log(`newUser`, newUser);
 
     if (!newUser) {
       throw new Error("Failed to create user");
@@ -118,7 +112,10 @@ async function signUpAction(formData: FormData) {
       .setExpirationTime("1y")
       .sign(new TextEncoder().encode(JWT_SECRET));
 
-    cookies().set(`token`, token);
+    cookies().set(`hesaby-user-token`, token);
+    revalidatePath(`/auth`);
+    return { user: newUser };
+    // return revalidatePath(`/`);
   } catch (error: any) {
     if (error instanceof yup.ValidationError) {
       console.error("Validation Error:", error.errors);
@@ -128,7 +125,7 @@ async function signUpAction(formData: FormData) {
       throw new Error(error.message);
     }
   }
-  redirect(`/`);
+  // revalidatePath(`/`);
 }
 
 export { loginAction, signUpAction };
