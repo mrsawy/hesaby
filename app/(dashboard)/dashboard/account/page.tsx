@@ -6,6 +6,8 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import prisma from "@/prisma/db";
 import s3 from "@/s3";
 
+export const dynamic = "force-dynamic";
+
 const Account = async () => {
   const accounts = await prisma.account.findMany({
     include: {
@@ -30,7 +32,7 @@ const Account = async () => {
     await Promise.all(promises);
     console.log(accounts);
   } catch (err) {
-    console.log(`error in signed private url`,err);
+    console.log(`error in signed private url`, err);
   }
 
   return <Accounts tableData={accounts} />;

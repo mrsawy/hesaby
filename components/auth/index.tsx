@@ -2,16 +2,14 @@ import React from "react";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import useIsUserLoggedClient from "@/hooks/useIsUserLoggedClient";
 import { cn } from "@/lib/utils";
+import useStore from "@/store/authStore";
 
-function SignedOut({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
+function SignedOut({ children, className }: { children: React.ReactNode; className?: string }) {
+  let { isLoading, isError } = useStore((state) => ({
+    isLoading: state.isLoading,
+    isError: state.isError,
+  }));
 
-  className?: string;
-}) {
-  let { isLoading, isSuccess, isError, user } = useIsUserLoggedClient();
   return (
     <div className={cn(className)}>
       {isError && <div>{children}</div>}
@@ -24,7 +22,10 @@ function SignedOut({
   );
 }
 function SignedIn({ children, className }: { children: React.ReactNode; className?: string }) {
-  let { isLoading, isSuccess, isError, user } = useIsUserLoggedClient();
+  let { isLoading, isSuccess } = useStore((state) => ({
+    isLoading: state.isLoading,
+    isSuccess: state.isSuccess,
+  }));
   return (
     <div className={cn(className)}>
       {isSuccess && <div>{children}</div>}

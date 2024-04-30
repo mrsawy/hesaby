@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import Button from "@/components/main-button";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
@@ -8,6 +8,7 @@ import { Bars3Icon, BellIcon, XMarkIcon, MagnifyingGlassIcon } from "@heroicons/
 import { SignedOut, SignedIn } from "@/components/auth";
 import useIsUserLoggedClient from "@/hooks/useIsUserLoggedClient";
 import { useRouter } from "next/navigation";
+import useAuthStore, { testAuth, setLogout, setLogin } from "@/store/authStore";
 
 const navigation = [
   { name: "Dashboard", href: "#", current: true },
@@ -22,7 +23,13 @@ function classNames(...classes: string[]) {
 
 export default function Example() {
   let router = useRouter();
-  let { authDispatch } = useIsUserLoggedClient();
+
+  //
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     testAuth();
+  //   }, 5122);
+  // }, []);
 
   // authDispatch
   return (
@@ -151,10 +158,11 @@ export default function Example() {
                                 )}
                                 onClick={(e) => {
                                   e.preventDefault();
-                                  authDispatch({ type: `LOGOUT` });
+                                  // authDispatch({ type: `LOGOUT` });
                                   setTimeout(() => {
+                                    setLogout();
                                     // window.location.reload();
-                                    window.location.href = "/";
+                                    // window.location.href = "/";
                                   }, 200);
                                 }}
                               >

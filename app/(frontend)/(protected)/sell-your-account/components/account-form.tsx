@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import TextField from "@mui/material/TextField";
 import Swal from "sweetalert2";
 
@@ -22,6 +22,7 @@ import { accountSchema } from "@/lib/formSchemas";
 import { sellAccountAction } from "@/actions/sell-acount";
 import useIsUserLoggedClient from "@/hooks/useIsUserLoggedClient";
 import IsLoading from "@/components/is-loading";
+import useAuthStore from "@/store/authStore";
 //
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 //
@@ -57,8 +58,19 @@ export default function AccountForm({
   const handleUpdateGallery = (fileItems: any) => {
     setGallery(fileItems.map((fileItem: any) => fileItem.file));
   };
-  let { user } = useIsUserLoggedClient();
-  return (
+  // let { user } = useIsUserLoggedClient();
+  let { user, isSuccess, isError } = useAuthStore();
+  // if (!isSuccess && isError) {
+  //   router.replace(`/auth`);
+  //   return <div></div>;
+  // }
+  useLayoutEffect(() => {
+    if (!isSuccess && isError && !user) {
+      router.replace(`/auth`);
+    }
+  }, [isSuccess, isError, user]);
+
+  return isSuccess && !isError ? (
     <IsLoading loading={loading}>
       <form
         onSubmit={() => {
@@ -186,13 +198,13 @@ export default function AccountForm({
             }}
             disablePortal
             id="combo-box-demo"
-            className="w-full"
+            className="w-full sm:w-full"
             options={platformsState}
             sx={{ width: 300 }}
             renderInput={(params) => <TextField {...params} label="Platform" />}
           />
           <Autocomplete
-            className="w-full"
+            className="w-full "
             onChange={(event: any, newValue: any) => {
               setGame_id(newValue?.id);
             }}
@@ -245,13 +257,13 @@ export default function AccountForm({
                 <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
               </div>
             ) : (
-              <p
-              className="md:text-lg"
-              >Sell Your Account</p>
+              <p className="md:text-lg">Sell Your Account</p>
             )}
           </Button>
         </div>
       </form>
     </IsLoading>
+  ) : (
+    <></>
   );
 }

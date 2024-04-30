@@ -12,12 +12,14 @@ import { userLogin as userLoginSchema, userSignup as signupSchema } from "@/lib/
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { useRouter } from "next/navigation";
 import useIsUserLoggedClient from "@/hooks/useIsUserLoggedClient";
+import useAuthStore, { setLogin } from "@/store/authStore";
 
 // import { useSession, signIn, signOut } from "next-auth/react";
 // import { wait } from "@/lib/utils";
 
 export default function LogInForm() {
-  let { isLoading, isSuccess, isError, user, authDispatch } = useIsUserLoggedClient();
+  let { isLoading, isSuccess, isError, user, isLogged } = useAuthStore();
+
   const router = useRouter();
   const [authState, setAuthState] = useState(`Log in`);
   const [inProp, setInProp] = useState(false);
@@ -33,8 +35,10 @@ export default function LogInForm() {
       </div>
     );
   }
-  if (isSuccess && router) {
-    return (window.location.href = "/");
+  if (isSuccess && router && isLogged) {
+    setLogin(user);
+    return router?.replace(`/`);
+    // return (window.location.href = "/");
 
     //  router?.replace(`/`);
   }
@@ -71,12 +75,13 @@ export default function LogInForm() {
               try {
                 userLoginSchema.validateSync({ email, password }, { abortEarly: false });
 
-                let {user} = await loginAction(formData);
+                let { user } = await loginAction(formData);
                 console.log(user);
 
                 if (user) {
                   setLoading(false);
-                  authDispatch({ type: `LOGIN`, payload: { user } });
+                  // authDispatch({ type: `LOGIN`, payload: { user } });
+                  setLogin(user);
                   Swal.fire({
                     icon: "success",
                     title: "Congrats !",
@@ -84,10 +89,12 @@ export default function LogInForm() {
                     timer: 2000,
                     showConfirmButton: false,
                   });
+                  setLogin(user);
                   setTimeout(() => {
                     // window.location.href = "/";
+                    router.replace(`/`);
 
-                    authDispatch({ type: `LOGIN`, payload: { user } });
+                    // authDispatch({ type: `LOGIN`, payload: { user } });
                   }, 1300);
                   // .then(() => {
                   // });
@@ -125,11 +132,11 @@ export default function LogInForm() {
                   { abortEarly: false }
                 );
 
-                let {user} = await signUpAction(formData);
+                let { user } = await signUpAction(formData);
 
-                console.log(user);
-                authDispatch({ type: `LOGIN`, payload: { user } });
-
+                // console.log(user);
+                // authDispatch({ type: `LOGIN`, payload: { user } });
+                setLogin(user);
                 Swal.fire({
                   icon: "success",
                   title: "Congrats !",

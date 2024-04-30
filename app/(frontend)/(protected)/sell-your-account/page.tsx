@@ -9,6 +9,7 @@ export default async function Page() {
   let games = await prisma.game.findMany();
 
   // console.log({ games, platforms });
+
   return (
     <div className=" pt-24 ">
       <HoverBorderGradient
@@ -27,3 +28,6 @@ export default async function Page() {
     </div>
   );
 }
+
+export const dynamic = "force-dynamic";
+// 'auto' | 'force-dynamic' | 'error' | 'force-static'
