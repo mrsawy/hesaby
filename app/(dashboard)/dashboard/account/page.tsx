@@ -30,7 +30,7 @@ const Account = async () => {
       }
     });
     await Promise.all(promises);
-    console.log(accounts);
+    // console.log(accounts);
   } catch (err) {
     console.log(`error in signed private url`, err);
   }

@@ -7,7 +7,7 @@ import { jwtVerify } from "jose";
 export const POST = async (request: Request) => {
   try {
     let data = await request.json();
-    console.log(data);
+    // console.log(data);
     let { token } = data;
     // let { token } = await request.json();
     const { payload } = await jwtVerify(

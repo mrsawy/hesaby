@@ -49,38 +49,34 @@ export const testAuth = async () => {
     });
     let { user, error } = await response.json();
     if (!response.ok) throw new Error();
-    useAuthStore.setState({
-      isLoading: false,
-      user,
-      isSuccess: true,
-      isError: false,
-      isLogged: true,
-    });
+    setLogin(user);
   } catch (error) {
     console.log(error);
-    useAuthStore.setState({
-      isLoading: false,
-      error,
-      isSuccess: false,
-      isError: true,
-      isLogged: false,
-    });
+    setLogout();
   }
 };
 
 export const setLogin = (user: any) => {
+  if (getCookie(`hesaby-user-token`)) {
+    localStorage.setItem(`hesaby-user-token`, `${getCookie(`hesaby-user-token`)}`.toString());
+  }
   useAuthStore.setState({
     isLoading: false,
     user,
     isSuccess: true,
     isError: false,
     isLogged: true,
+    errorMsg: ``,
+    error: undefined,
     token: getCookie(`hesaby-user-token`)?.toString(),
   });
 };
 
 export const setLogout = () => {
   getCookie(`hesaby-user-token`) && deleteCookie(`hesaby-user-token`);
+
+  localStorage.removeItem(`hesaby-user-token`);
+
   useAuthStore.setState({
     isLoading: false,
     error: { error: true },
@@ -89,5 +85,6 @@ export const setLogout = () => {
     isLogged: false,
     token: undefined,
     user: null,
+    errorMsg: `User logout`,
   });
 };

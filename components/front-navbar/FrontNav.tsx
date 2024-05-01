@@ -10,6 +10,8 @@ import useIsUserLoggedClient from "@/hooks/useIsUserLoggedClient";
 import { useRouter } from "next/navigation";
 import useAuthStore, { testAuth, setLogout, setLogin } from "@/store/authStore";
 
+import { getCookie, setCookie, deleteCookie } from "cookies-next";
+
 const navigation = [
   { name: "Dashboard", href: "#", current: true },
   { name: "Team", href: "#", current: false },
@@ -24,12 +26,22 @@ function classNames(...classes: string[]) {
 export default function Example() {
   let router = useRouter();
 
-  //
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     testAuth();
-  //   }, 5122);
-  // }, []);
+  useEffect(() => {
+    let token: any;
+    if (getCookie(`hesaby-user-token`)) {
+      token = getCookie(`hesaby-user-token`)?.toString();
+    } else if (localStorage.getItem(`hesaby-user-token`)) {
+      token = localStorage.getItem(`hesaby-user-token`);
+    }
+    //  __________________
+    setTimeout(() => {
+      if (!token) {
+        setLogout();
+      } else {
+        testAuth();
+      }
+    }, 500);
+  }, []);
 
   // authDispatch
   return (
