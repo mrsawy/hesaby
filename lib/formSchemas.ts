@@ -6,8 +6,16 @@ export const userLogin = yup.object().shape({
 });
 
 export const userSignup = yup.object().shape({
-  firstName: yup.string().required(),
-  lastName: yup.string().required(),
+  firstName: yup
+    .string()
+    .matches(/^\S*$/, "First name should contain only one word")
+
+    .required(),
+  lastName: yup
+    .string()
+    .matches(/^\S*$/, "First name should contain only one word")
+
+    .required(),
   password: yup.string().min(6).required(),
   confirm_password: yup
     .string()
@@ -181,8 +189,16 @@ export const resetPasswordSchema = yup.object().shape({
 export const editUserSchema = yup.object().shape({
   email: yup.string().email().required(),
   id: yup.string().required(),
-  firstName: yup.string().max(9, "first name must be at least than 9 characters"),
-  lastName: yup.string().max(9, "last name must be at least than 9 characters"),
+  firstName: yup
+    .string()
+    .matches(/^\S*$/, "First name should contain only one word")
+
+    .max(9, "first name must be at least than 9 characters"),
+  lastName: yup
+    .string()
+    .matches(/^\S*$/, "First name should contain only one word")
+
+    .max(9, "last name must be at least than 9 characters"),
   bio: yup.string().max(150, "last name must be at least than 9 characters").optional().nullable(),
   profileImg: yup
     .mixed()

@@ -185,7 +185,7 @@ export default function SideBar({ asideClassName, platforms, games }: any) {
                 title="Price"
               />
             </li>
-            <li className="pt-4">
+            <li className="pt-4 mb-16">
               <Button onClick={handleSubmit} className="py-1 px-3 w-full">
                 Submit
               </Button>
