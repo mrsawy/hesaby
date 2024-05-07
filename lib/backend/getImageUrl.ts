@@ -54,3 +54,22 @@ export async function getSingleUrl({ key }: { key: string | null | undefined }) 
     throw error; // Throw the error so the caller can handle it
   }
 }
+
+
+export async function getCoverUrl({ key }: { key: string | null | undefined }) {
+  try {
+    if (!key) {
+      return `/cover_placholder.jpg`;
+    }
+    const command = new GetObjectCommand({
+      Bucket: process.env.AWS_S3_BUCKET_NAME,
+      Key: key,
+    });
+    const url = await getSignedUrl(s3, command, { expiresIn: 3600 * 24 });
+
+    return url;
+  } catch (error) {
+    console.log(error);
+    throw error; // Throw the error so the caller can handle it
+  }
+}

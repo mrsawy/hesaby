@@ -2,6 +2,8 @@ import { cookies } from "next/headers";
 
 import prisma from "@/prisma/db";
 import { jwtVerify } from "jose";
+import { getSingleUrl, getCoverUrl } from "@/lib/backend/getImageUrl";
+import Image from "next/image";
 
 export default async function Page({ params }: any) {
   const cookieStore = cookies();
@@ -26,9 +28,14 @@ export default async function Page({ params }: any) {
     // console.log(error);
   }
 
+  let profileUrl = await getSingleUrl({ key: user.profileImg });
+  let coverUrl = await getCoverUrl({ key: user.coverImg });
+
   return (
     <div className="h-screen flex items-center dark:text-gray-400 justify-center w-full">
-      {/* <div className="w-full">/ */}
+      <div className="w-full">
+        <Image src={coverUrl} fill alt="cover image" />
+      </div>
 
       {id}
       <br />

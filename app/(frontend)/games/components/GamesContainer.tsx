@@ -1,4 +1,4 @@
-import SideBar from "./SideBar";
+// import SideBar from "./SideBar";
 import Card from "@/components/cards/nextui-card";
 import { cn } from "@/lib/utils";
 
