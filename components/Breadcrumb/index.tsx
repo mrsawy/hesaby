@@ -24,8 +24,9 @@ export default function Breadcrumb({ elements }: { elements: Props }) {
   return (
     <div role="presentation" onClick={handleClick}>
       <Breadcrumbs aria-label="breadcrumb" className="text-gray-700 dark:text-gray-300 ">
-        {elements.map((element: Element) => (
+        {elements.map((element: Element, i: number) => (
           <Link
+            key={i}
             underline="hover"
             sx={{ display: "flex", alignItems: "center" }}
             color="inherit"
@@ -36,7 +37,6 @@ export default function Breadcrumb({ elements }: { elements: Props }) {
             {element?.text}
           </Link>
         ))}
-        
       </Breadcrumbs>
     </div>
   );

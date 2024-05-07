@@ -122,8 +122,8 @@ export default function SideBar({ asideClassName, platforms, games }: any) {
             <li>
               <CollapseItemsComponents
                 icon={<VideogameAssetIcon className="text-gray-400" />}
-                items={games.map((game: any) => (
-                  <Checkbox value={game?.id} onChange={handleChangeGame}>
+                items={games.map((game: any, i: number) => (
+                  <Checkbox key={i} value={game?.id} onChange={handleChangeGame}>
                     {game.title}
                   </Checkbox>
                 ))}
@@ -133,8 +133,8 @@ export default function SideBar({ asideClassName, platforms, games }: any) {
             <li>
               <CollapseItemsComponents
                 icon={<SportsEsportsIcon className="text-gray-400" />}
-                items={platforms.map((platform: any) => (
-                  <Checkbox value={platform?.id} onChange={handleChangePlatform}>
+                items={platforms.map((platform: any, i: number) => (
+                  <Checkbox key={i} value={platform?.id} onChange={handleChangePlatform}>
                     {platform.title}
                   </Checkbox>
                 ))}
