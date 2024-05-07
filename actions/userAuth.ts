@@ -43,7 +43,11 @@ async function loginAction(formData: FormData) {
     if (!res) {
       throw new Error(`Wrong Password`);
     }
-    const token = await new SignJWT({ email: user.email, password: rawFormData.password })
+    const token = await new SignJWT({
+      id: user.id,
+      email: user.email,
+      password: rawFormData.password,
+    })
       .setProtectedHeader({ alg: "HS256" })
       .setExpirationTime("1y")
       .sign(new TextEncoder().encode(JWT_SECRET));
@@ -114,7 +118,11 @@ async function signUpAction(formData: FormData) {
       throw new Error("Failed to create user");
     }
 
-    const token = await new SignJWT({ email: newUser.email, password: rawFormData.password })
+    const token = await new SignJWT({
+      id: newUser.id,
+      email: newUser.email,
+      password: rawFormData.password,
+    })
       .setProtectedHeader({ alg: "HS256" })
       .setExpirationTime("1y")
       .sign(new TextEncoder().encode(JWT_SECRET));

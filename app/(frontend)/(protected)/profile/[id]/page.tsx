@@ -13,16 +13,17 @@ export default async function Page({ params }: any) {
 
   try {
     const userToken = cookieStore.get("hesaby-user-token");
+    console.log({ userToken });
     const { payload } = await jwtVerify(
-      `${userToken}` as string,
+      `${userToken?.value}` as string,
       new TextEncoder().encode(process.env.JWT_SECRET)
     );
-    console.log(payload);
+    // console.log(payload);
     if (payload.id == id) {
       sameUser = true;
     }
   } catch (error) {
-    console.log(error)
+    // console.log(error);
   }
 
   return (

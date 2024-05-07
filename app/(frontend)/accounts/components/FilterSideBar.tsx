@@ -145,7 +145,7 @@ export default function SideBar({ asideClassName, platforms, games }: any) {
               <CollapseItemsComponents
                 icon="$"
                 items={[
-                  <div className="flex flex-col gap-1">
+                  <div key={`price_from`} className="flex flex-col gap-1">
                     <label className="text-gray-600 dark:text-gray-400">From</label>
                     <Input
                       value={`${price.from}`}
@@ -163,7 +163,7 @@ export default function SideBar({ asideClassName, platforms, games }: any) {
                       }
                     />
                   </div>,
-                  <div className="flex flex-col gap-1">
+                  <div key={`price_to`} className="flex flex-col gap-1">
                     <label className="text-gray-600 dark:text-gray-400">To</label>
                     <Input
                       value={price.to.toString()}
