@@ -77,10 +77,10 @@ export default function CarouselSize({
                         <p>{data[index].price}</p>
                         <span>SR</span>
                       </div>
-                      {<ShoppingCartCheckoutIcon className="text-xs sm:text-md lg:text-lg" />}
+                      <ShoppingCartCheckoutIcon className="text-xs sm:text-md lg:text-lg" />
                     </div>
                   ) : (
-                    <div className="text-xs sm:text-md lg:text-lg">{btnTxt}</div>
+                    <div className="text-xs sm:text-md lg:text-lg flex-row flex justify-center items-center ">{btnTxt}</div>
                   )
                 }
               />

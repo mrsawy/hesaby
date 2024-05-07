@@ -190,7 +190,7 @@ export default function SideBar({ asideClassName, platforms, games }: any) {
                 Submit
               </Button>
             </li>
-            <li></li>
+            <li className="mt-16"></li>
             <li></li>
             <li></li>
           </ul>
