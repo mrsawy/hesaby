@@ -129,3 +129,88 @@
 div.css-84nhb1-MuiAutocomplete-root {
   width: 100%;
 }
+
+.hide_account_img {
+  animation: hide 0.5s ease-in;
+}
+
+@keyframes hide {
+  0% {
+    opacity: 1;
+  }
+  99% {
+    opacity: 0;
+  }
+  100% {
+    display: none;
+  }
+}
+
+.child-w-full > div {
+  width: 100%;
+}
+
+@media screen and (max-width: 1400px) {
+  .flex-wrap-child-sm > div {
+    flex-wrap: wrap;
+  }
+}
+
+/* home page hero */
+.aws-btn {
+  --slider-height-percentage: 60%;
+  --slider-transition-duration: 815ms;
+  --organic-arrow-thickness: 12px;
+  --organic-arrow-border-radius: 29px;
+  --organic-arrow-height: 31px;
+  --organic-arrow-color: #cf3438;
+  --control-button-width: 7%;
+  --control-button-height: 25%;
+  --control-button-background: transparent;
+  --control-bullet-color: #f33d42;
+  --control-bullet-active-color: #cf3438;
+  --loader-bar-color: #851515;
+  --loader-bar-height: 6px;
+}
+/*  */
+.red-box-shadow {
+  -webkit-box-shadow: 0px 0px 31px 12px rgba(179, 163, 163, 0.6);
+  -moz-box-shadow: 0px 0px 31px 12px rgba(238, 232, 232, 0.6);
+  box-shadow: 0px 0px 31px 12px rgba(255, 255, 255, 0.6);
+}
+.red-box-shadow-inner {
+  -webkit-box-shadow: inset 0px 0px 31px 12px rgba(179, 178, 178, 0.6);
+  -moz-box-shadow: inset 0px 0px 31px 12px rgba(243, 213, 213, 0.6);
+  box-shadow: inset 0px 0px 31px 12px rgba(245, 230, 230, 0.6);
+}
+
+/*  */
+body {
+  min-height: 100vh;
+}
+/* body.dark {
+  background: #16151a;
+} */
+
+.p-dialog.p-component {
+  box-shadow: none !important;
+}
+.p-dialog-header {
+  display: none !important;
+}
+.p-dialog-content {
+  background: none !important;
+  border: none;
+  box-shadow: none;
+  outline: none;
+}
+
+/*  */
+
+.border-none-child-input input {
+  border: none !important;
+}
+/*  */
+.text-with-shadow {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* horizontal-offset vertical-offset blur-radius color */
+}

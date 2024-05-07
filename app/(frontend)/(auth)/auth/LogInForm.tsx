@@ -11,14 +11,16 @@ import IsLoadingComponent from "@/components/is-loading";
 import { userLogin as userLoginSchema, userSignup as signupSchema } from "@/lib/formSchemas";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { useRouter } from "next/navigation";
-import useIsUserLoggedClient from "@/hooks/useIsUserLoggedClient";
 import useAuthStore, { setLogin } from "@/store/authStore";
+import useGeneralStore from "@/store/generalStore";
+import Link from "next/link";
 
 // import { useSession, signIn, signOut } from "next-auth/react";
 // import { wait } from "@/lib/utils";
 
 export default function LogInForm() {
   let { isLoading, isSuccess, isError, user, isLogged } = useAuthStore();
+  let { setGeneralIsLoading } = useGeneralStore();
 
   const router = useRouter();
   const [authState, setAuthState] = useState(`Log in`);
@@ -27,22 +29,9 @@ export default function LogInForm() {
   //
   const [loading, setLoading] = useState(false);
   //
-
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <IsLoadingComponent loading={true} />
-      </div>
-    );
-  }
-  if (isSuccess && router && isLogged) {
-    setLogin(user);
-    router?.replace(`/`);
-    return <></>;
-    // return (window.location.href = "/");
-
-    //  router?.replace(`/`);
-  }
+  useEffect(() => {
+    setGeneralIsLoading(isLoading);
+  }, [isLoading]);
 
   return isError && !isLoading && !isSuccess ? (
     <CSSTransition
@@ -89,10 +78,7 @@ export default function LogInForm() {
                 });
                 setLogin(user);
                 setTimeout(() => {
-                  // window.location.href = "/";
                   router.replace(`/`);
-
-                  // authDispatch({ type: `LOGIN`, payload: { user } });
                 }, 1300);
                 // .then(() => {
                 // });
@@ -164,7 +150,7 @@ export default function LogInForm() {
             }
           }
         }}
-        className={`${classes.form_container} ${classes.form} sm:p-4 h-full  sm:h-[90%] `}
+        className={`${classes.form_container} ${classes.form} sm:p-4 h-[90%]  sm:h-[85%] `}
       >
         <div className={classes.center_container}>
           <div className={classes.login_signup}>
@@ -274,7 +260,11 @@ export default function LogInForm() {
           />
           <hr />
           <div className={classes.forget_password_container}>
-            {authState === `Log in` && <p>forgot your password ?</p>}{" "}
+            {authState === `Log in` && (
+              <Link href={`/forget-password`}>
+                <p className=" text-gray-500 hover:text-white">forgot your password ?</p>
+              </Link>
+            )}{" "}
           </div>
         </div>
         <CSSTransition

@@ -20,7 +20,6 @@ import Button from "@/components/main-button";
 import Input from "@/components/ui/input-light";
 import { accountSchema } from "@/lib/formSchemas";
 import { sellAccountAction } from "@/actions/sell-acount";
-import useIsUserLoggedClient from "@/hooks/useIsUserLoggedClient";
 import IsLoading from "@/components/is-loading";
 import useAuthStore from "@/store/authStore";
 //
@@ -58,17 +57,12 @@ export default function AccountForm({
   const handleUpdateGallery = (fileItems: any) => {
     setGallery(fileItems.map((fileItem: any) => fileItem.file));
   };
-  // let { user } = useIsUserLoggedClient();
   let { user, isSuccess, isError } = useAuthStore();
-  // if (!isSuccess && isError) {
-  //   router.replace(`/auth`);
-  //   return <div></div>;
-  // }
   useLayoutEffect(() => {
     if (!isSuccess && isError && !user) {
       router.replace(`/auth`);
     }
-  }, [isSuccess, isError, user]);
+  }, [isSuccess, isError, user, router]);
 
   return isSuccess && !isError ? (
     <IsLoading loading={loading}>
@@ -167,14 +161,17 @@ export default function AccountForm({
             placeholder="Account Title"
             name="title"
           />
-          <Textarea
-            name="description"
-            //   isRequired
-            label="Description"
-            labelPlacement="outside"
-            placeholder="Enter your description"
-            className=" md:w-full border-none-child-textarea outline-none-child-textarea w-full-none-child-textarea h-full-child-textarea "
-          />
+
+          <div className="flex flex-col w-full">
+            <label htmlFor="description">Description:</label>
+
+            <Textarea
+              name="description"
+              labelPlacement="outside"
+              placeholder="Enter your description"
+              className=" md:w-full border-none-child-textarea outline-none-child-textarea w-full-none-child-textarea h-full-child-textarea dark:text-white "
+            />
+          </div>
         </div>
         <div className="flex flex-col sm:flex-row gap-2">
           <Input
@@ -198,13 +195,13 @@ export default function AccountForm({
             }}
             disablePortal
             id="combo-box-demo"
-            className="w-full sm:w-full"
+            className="w-full  dark:bg-white"
             options={platformsState}
             sx={{ width: 300 }}
             renderInput={(params) => <TextField {...params} label="Platform" />}
           />
           <Autocomplete
-            className="w-full "
+            className="w-full  dark:bg-white"
             onChange={(event: any, newValue: any) => {
               setGame_id(newValue?.id);
             }}
@@ -218,7 +215,7 @@ export default function AccountForm({
 
         <div className="flex flex-col md:flex-row gap-2 mt-6 ">
           <div className="w-full md:w-6/12 md:m-auto md:mt-0">
-            <label>Main Image</label>
+            <label className="dark:text-gray-400">Main Image</label>
             <FilePond
               files={mainImage}
               onupdatefiles={handleUpdateMainImage}
@@ -231,7 +228,7 @@ export default function AccountForm({
           </div>
 
           <div className="w-full md:w-6/12 md:m-auto md:mt-0">
-            <label>
+            <label className=" dark:text-gray-400">
               Gallery <span className="text-gray-500">(5 max)</span>
             </label>
 
@@ -249,7 +246,8 @@ export default function AccountForm({
         <div className="w-full  text-center mt-8">
           <Button
             disabled={loading}
-            className="m-auto bg-slate-900 md:w-9/12 lg:w-6/12 xl:w-4/12 mb-16 py-3"
+            // bg-slate-900
+            className="m-auto md:w-9/12 lg:w-6/12 xl:w-4/12 mb-16 py-3"
             type="submit"
           >
             {loading ? (

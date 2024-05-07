@@ -23,13 +23,12 @@ export const addNewAction = async (tableName: TableName, rawFormData: FormData) 
         tableName,
         identifier: key,
       });
-      console.log(`path==> `, path);
+      // console.log(`path==> `, path);
       formData[key] = path;
       continue;
     }
     formData[key] = rawFormData.get(key);
   }
-  console.log(tableName, formData);
   let createdEntry;
 
   switch (tableName) {
@@ -41,6 +40,50 @@ export const addNewAction = async (tableName: TableName, rawFormData: FormData) 
       break;
     case "platform":
       createdEntry = await prisma.platform.create({
+        data: formData as PrismaType.PlatformCreateInput,
+      });
+      break;
+    default:
+      throw new Error(`Invalid table name: ${tableName}`);
+  }
+  console.log(`createdEntry==>`, createdEntry);
+  return revalidatePath(`/dashboard/platform`);
+};
+export const editAction = async (tableName: TableName, rawFormData: FormData, id: string) => {
+  // revalidatePath
+  const formData: { [key: string]: any } = {};
+  for (const [key, value] of rawFormData.entries()) {
+    if (rawFormData.get(key) instanceof File) {
+      const file = rawFormData.get(key) as File; // Cast to File type
+      //
+      if (!file.type.includes(`image/`)) throw new Error(`Invalid File Type`);
+      if (file.size >= 10 * 1024 * 1024) throw new Error(`File is Too large Type`);
+      //
+
+      let { path } = await handleUploadFiles({
+        file: rawFormData.get(key) as File | null,
+        tableName,
+        identifier: key,
+      });
+      // console.log(`path==> `, path);
+      formData[key] = path;
+      continue;
+    }
+    formData[key] = rawFormData.get(key);
+  }
+  let createdEntry;
+
+  switch (tableName) {
+    case "game":
+      createdEntry = await prisma.game.update({
+        where: { id },
+        data: formData as PrismaType.GameCreateInput,
+      });
+
+      break;
+    case "platform":
+      createdEntry = await prisma.platform.update({
+        where: { id },
         data: formData as PrismaType.PlatformCreateInput,
       });
       break;

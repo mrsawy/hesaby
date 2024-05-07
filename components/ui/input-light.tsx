@@ -29,6 +29,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const { value } = event.target;
       if (isNumber) {
+        console.log(value)
         // Allow only numbers
         const onlyNumbers = value.replace(/[^0-9]/g, '');
         event.target.value = onlyNumbers;

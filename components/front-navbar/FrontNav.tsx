@@ -4,29 +4,47 @@ import { Fragment, useEffect } from "react";
 import Button from "@/components/main-button";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-// import SignedIn from "@/components/auth/signed-in";
 import { SignedOut, SignedIn } from "@/components/auth";
-import useIsUserLoggedClient from "@/hooks/useIsUserLoggedClient";
 import { useRouter } from "next/navigation";
 import useAuthStore, { testAuth, setLogout, setLogin } from "@/store/authStore";
 
 import { getCookie, setCookie, deleteCookie } from "cookies-next";
-
-const navigation = [
-  { name: "Dashboard", href: "#", current: true },
-  { name: "Team", href: "#", current: false },
-  { name: "Projects", href: "#", current: false },
-  { name: "Calendar", href: "#", current: false },
-];
+import DarkModeSwitch from "@/components/dark-mode-front/DarkModeSwitcher";
+import useThemeStore from "@/store/themeStore";
+import IsLoadingComponent from "@/components/is-loading";
+import Link from "next/link";
+import useGeneralStore from "@/store/generalStore";
+import { usePathname } from "next/navigation";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Example() {
-  let router = useRouter();
+  const pathname = usePathname();
+  const navigation = [
+    { name: "Home", href: "/", current: pathname == `/` },
+    // { name: "About Us", href: "/about", current: pathname.includes(`about`) },
+    // { name: "Contact Us", href: "/contact", current: pathname.includes(`about`) },
+    { name: "All Games", href: "/games", current: pathname.includes(`games`) },
+    { name: "All Accounts", href: "/accounts", current: pathname.includes(`accounts`) },
+  ];
+  let currentTheme = useThemeStore((s) => s.currentTheme);
+
+  let generalIsLoading = useGeneralStore((s) => s.generalIsLoading);
+
+  // let router = useRouter();
+  useEffect(() => {
+    if (currentTheme == `dark`) {
+      document?.querySelector(`body`)?.classList.add(`dark`);
+    } else {
+      document?.querySelector(`body`)?.classList.remove(`dark`);
+    }
+  }, [currentTheme]);
 
   useEffect(() => {
+    useAuthStore.persist.rehydrate();
+    useThemeStore.persist.rehydrate();
     let token: any;
     if (getCookie(`hesaby-user-token`)) {
       token = getCookie(`hesaby-user-token`)?.toString();
@@ -45,8 +63,8 @@ export default function Example() {
 
   // authDispatch
   return (
-    <Disclosure as="nav" className="bg-gray-800 fixed top-0 z-40 w-full">
-      {({ open }) => (
+    <Disclosure as="nav" className="bg-gray-200 fixed top-0 z-40 w-full dark:bg-zinc-900 ">
+      {({ open }: { open: any }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div className="relative flex h-16 items-center justify-between">
@@ -77,9 +95,10 @@ export default function Example() {
                         key={item.name}
                         href={item.href}
                         className={classNames(
+                          `  dark:text-gray-300 `,
                           item.current
-                            ? "bg-gray-900 text-white"
-                            : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                            ? "bg-gray-800 text-white"
+                            : " text-blue-950 hover:bg-gray-700 hover:text-white",
                           "rounded-md px-3 py-2 text-sm font-medium"
                         )}
                         aria-current={item.current ? "page" : undefined}
@@ -90,7 +109,11 @@ export default function Example() {
                   </div>
                 </div>
               </div>
+              {/* <Loading */}
+              <IsLoadingComponent loading={generalIsLoading} />
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                <DarkModeSwitch />
+
                 <SignedOut className="">
                   <Button href="/auth" className="py-1 px-4 text-md">
                     <div>Sign Up / Log in</div>
@@ -107,11 +130,14 @@ export default function Example() {
                 </button> */}
 
                 {/* Profile dropdown */}
+
                 <SignedIn>
                   <div className="flex justify-center items-center">
-                    <Button href="/sell-your-account" className="py-2 px-4 text-md">
-                      <div>Sell Your Account</div>
-                    </Button>
+                    <Link href="/sell-your-account">
+                      <Button className="py-2 px-4 text-md">
+                        <div>Sell Your Account</div>
+                      </Button>
+                    </Link>
                     <Menu as="div" className="relative ml-3">
                       <div>
                         <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">

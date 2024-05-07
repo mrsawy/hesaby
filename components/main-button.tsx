@@ -12,6 +12,7 @@ export default function Button({
   disabled,
   onClick, // Include onClick prop
   href,
+  ...props
 }: {
   children: React.ReactNode;
   className?: string;
@@ -19,6 +20,7 @@ export default function Button({
   type?: "button" | "submit" | "reset" | undefined;
   onClick?: Function;
   href?: string;
+  props?: any;
 }) {
   let router = useRouter();
   if (href && onClick) {
@@ -28,11 +30,12 @@ export default function Button({
     <button
       disabled={disabled}
       type={type ? type : "button"}
-      className={cn(Classes["button"], `bg-red-700`, className)}
+      className={cn(Classes["button"], `bg-red-700 rounded-sm`, className)}
       onClick={(e) => {
         href && router.push(href);
         onClick && onClick(e);
       }}
+      {...props}
     >
       {children}
     </button>

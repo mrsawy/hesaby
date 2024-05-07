@@ -82,11 +82,18 @@ async function signUpAction(formData: FormData) {
     await signupSchema.validate(rawFormData, { abortEarly: false });
     const FoundedUser = await prisma.user.findFirst({
       where: {
-        email: rawFormData.email,
+        OR: [
+          {
+            email: rawFormData.email,
+          },
+          {
+            phoneNumber: rawFormData.phoneNumber,
+          },
+        ],
       },
     });
     if (FoundedUser) {
-      throw new Error("User with the same Email already exists ");
+      throw new Error("User with the same Email Or Phone number already exists ");
     }
 
     const hashedPassword = await bcrypt.hash(rawFormData.password, ROUNDS_OF_HASHING);

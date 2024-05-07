@@ -5,7 +5,11 @@ const nextConfig = {
   // output: "export", // for making the application into html & css (SSG)
 
   images: {
-    domains: ["aceternity.com", `images.unsplash.com`, `tailwindui.com` , 'hesaby-s3.s3.me-south-1.amazonaws.com'],
+    domains: ["aceternity.com", `images.unsplash.com`, `tailwindui.com` ,
+    
+    'hesaby-s3.s3.me-south-1.amazonaws.com' , 
+    'hesaby.s3.me-south-1.amazonaws.com' , 
+  ],
   },
 };
 

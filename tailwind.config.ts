@@ -69,6 +69,16 @@ const config: Config = {
           foreground: "hsl(var(--card-foreground))",
         },
       },
+
+      // dark: {
+      //   colors: {
+      //     primary: {
+      //       DEFAULT: "#BEF264",
+      //       foreground: "#BEF264",
+      //     },
+      //     focus: "#BEF264",
+      //   },
+      // },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",

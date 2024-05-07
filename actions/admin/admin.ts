@@ -43,7 +43,7 @@ async function adminLogin(formData: FormData) {
         .setExpirationTime("1y")
         .sign(new TextEncoder().encode(JWT_SECRET_ADMIN));
 
-      console.log(token);
+      // console.log(token);
       cookies().set(`admin-token`, token);
     }
   } catch (error: any) {

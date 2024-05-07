@@ -1,8 +1,18 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { jwtVerify } from "jose";
+import { PrismaClient } from "@prisma/client/edge";
+import { withAccelerate } from "@prisma/extension-accelerate";
+import prisma from "@/prisma/db";
+
+// const prisma = new PrismaClient();
+
+// const prismaClientSingleton = () => {
+//   return new PrismaClient().$extends(withAccelerate());
+// };
 
 const JWT_SECRET_ADMIN: string = process.env.JWT_SECRET_ADMIN as string;
+const BASE_URL: string = process.env.BASE_URL as string;
 
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
@@ -14,7 +24,6 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL("/dashboard/login", request.url));
     }
     let tokenCookie = request.cookies.get("admin-token");
-    console.log(tokenCookie);
     if (typeof tokenCookie?.value == `string`) {
       const { payload } = await jwtVerify(
         tokenCookie.value,
@@ -26,6 +35,17 @@ export async function middleware(request: NextRequest) {
       );
       if (!payload) {
         return NextResponse.redirect(new URL("/dashboard/login", request.url));
+      }
+      let response = await fetch(`${BASE_URL}/api/admin/check-token`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Token invalid`);
       }
     }
 

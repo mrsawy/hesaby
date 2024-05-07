@@ -6,10 +6,18 @@ import { Dialog } from "primereact/dialog";
 
 import classes from "./styles.module.css";
 
-function Index({ children, loading }: { children?: React.ReactNode; loading: boolean }) {
+function Index({
+  children,
+  loading,
+  className,
+}: {
+  children?: React.ReactNode;
+  loading: boolean;
+  className?: string;
+}) {
   // cn
   return (
-    <div>
+    <div className={className ?? ``}>
       {loading && <LoadingComponent />}
       {children ? children : ``}
     </div>
@@ -29,10 +37,12 @@ const LoadingComponent = () => {
           //   header="Header"
           visible={visible}
           style={{ width: "50vw" }}
-          onHide={() => setVisible(false)}
+          onHide={() => {
+            setVisible(false);
+          }}
           className={`sell-account-modal`}
         >
-          <div className="flex justify-center items-center">
+          <div className="flex justify-center items-center mt-7 ">
             <div className={cn(classes.loader)}>
               <svg viewBox="0 0 80 80">
                 <circle id="test" cx="40" cy="40" r="32"></circle>

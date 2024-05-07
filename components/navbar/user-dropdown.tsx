@@ -40,7 +40,7 @@ export const UserDropdown = () => {
 
   let adminToken = getCookie(`admin-token`)?.toString();
 
-  console.log(`adminToken from user deopdown`, adminToken);
+  // console.log(`adminToken from user deopdown`, adminToken);
   const pathname = usePathname();
   const { theme } = useNextTheme();
 

@@ -2,7 +2,7 @@
 
 import AccountForm from "./components/account-form";
 import prisma from "@/prisma/db";
-import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
+import Panel from "@/components/text-panel";
 
 export default async function Page() {
   let platforms = await prisma.platform.findMany();
@@ -12,13 +12,7 @@ export default async function Page() {
 
   return (
     <div className=" pt-24 ">
-      <HoverBorderGradient
-        containerClassName="text-3xl font-bold bg-slate-50 shadow-md   text-black m-auto text-center  mb-20  rounded"
-        className="bg-white text-black px-9 py-4 text-lg"
-        as="button"
-      >
-        Sell Your Account
-      </HoverBorderGradient>
+      <Panel>Sell Your Account</Panel>
       <div className=" font-bold  text-black m-auto w-11/12 md:w-9/12 ">
         <AccountForm
           platforms={platforms.map((e) => ({ ...e, label: e?.title }))}

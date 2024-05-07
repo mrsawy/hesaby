@@ -50,25 +50,25 @@ export const SidebarWrapper = () => {
             <SidebarItem title="Home" icon={<HomeIcon />} isActive={pathname === "/"} href="/" />
             <SidebarMenu title="Main Menu">
               <SidebarItem
-                isActive={pathname === "/users"}
+                isActive={pathname.includes("/dashboard/user")}
                 title="users"
-                href="/dashboard/users"
+                href="/dashboard/user"
                 icon={<CustomersIcon />}
               />
               <SidebarItem
-                isActive={pathname === "/platform"}
+                isActive={pathname.includes("/dashboard/platform")}
                 title="Platforms"
                 href="/dashboard/platform"
                 icon={<VideogameAssetIcon className="text-gray-400" />}
               />
               <SidebarItem
-                isActive={pathname === "/game"}
+                isActive={pathname.includes("/dashboard/game")}
                 title="Games"
                 href="/dashboard/game"
                 icon={<GamepadIcon className="text-gray-400" />}
               />
               <SidebarItem
-                isActive={pathname === "/account"}
+                isActive={pathname.includes("/dashboard/account")}
                 title="Accounts"
                 href="/dashboard/account"
                 icon={<SportsEsportsIcon className="text-gray-400" />}

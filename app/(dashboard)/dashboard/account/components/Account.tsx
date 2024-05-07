@@ -6,6 +6,7 @@ import { HouseIcon } from "@/components/icons/breadcrumb/house-icon";
 import { TableWrapper } from "@/components/table/table";
 import AddNew from "@/components/dashboard/add-new";
 import RenderCell from "./render-cell";
+
 //
 type Props = {
   tableData?: any;
@@ -59,11 +60,11 @@ export const Accounts = ({ tableData }: Props) => {
             { name: "Image", uid: "image" },
             { name: "Title", uid: "Title" },
             { name: "Description", uid: "Description" },
-            { name: "Game", uid: "Game" },
             { name: "Platform", uid: "Platform" },
+            { name: "Game", uid: "Game" },
             { name: "Status", uid: "Status" },
-            { name: "Data", uid: "Data" },
             { name: "Seller", uid: "Seller" },
+            { name: "Is Featured", uid: "Is_Featured" },
             { name: "ACTIONS", uid: "actions" },
           ]}
           bodyData={optData}

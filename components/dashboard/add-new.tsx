@@ -15,19 +15,22 @@ import addNewSubmitHandler from "@/lib/addNewSubmitHandler";
 import addNewAction from "@/actions/admin/addNew";
 import TableName from "@/types/table-names";
 import { Select, SelectItem } from "@nextui-org/select";
+import useGeneralStore from "@/store/generalStore";
 
 export const AddNew = ({
   label,
   inputs,
   tableName,
-  addOpt,
-}: {
+}: // addOpt,
+{
   label: string;
-  addOpt?: any;
+  // addOpt?: any;
   tableName: TableName;
   inputs: { name: string; title: string; type: string; multiple?: boolean }[];
 }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+  let setGeneralIsLoading = useGeneralStore((s) => s.setGeneralIsLoading);
 
   return (
     <div>
@@ -40,25 +43,52 @@ export const AddNew = ({
             {(onClose) => (
               <>
                 <form
-                  action={addNewAction.bind(null, tableName)}
-                  onSubmit={async (e) => {
-                    const formValues = getFormInputValues(
-                      e.target as HTMLFormElement,
-                      inputs?.map((i) => i?.name)
-                    );
-                    // console.log(formValues);
+                  id="add-new-form"
+                  action={async (formData: FormData) => {
+                    console.log(`add new form data`, formData);
+                    try {
+                      if (
+                        // Object.values(Object.fromEntries(formData.entries())).some((v: any) => {
+                        //   console.log(v);
+                        //   return !v || v?.length === 0;
+                        // })
+                        Object.entries(Object.fromEntries(formData.entries())).some(
+                          ([key, value]:any) => key !== "description" && (!value || value.length === 0)
+                        )
+                      ) {
+                        Swal.fire({
+                          icon: "error",
+                          title: "Oops...",
+                          text: "All Fields Are Required !",
+                        });
+                        return;
+                      }
+                      onClose();
+                      setGeneralIsLoading(true);
+                      await addNewAction(tableName, formData);
+                      setGeneralIsLoading(false);
 
-                    if (Object.values(formValues).some((v) => !v || v?.length === 0)) {
+                      Swal.fire({
+                        icon: "success",
+                        title: "Created Successfully!",
+                        // text: "the Platform has been deleted.",
+                        timer: 20000,
+                        allowOutsideClick: false,
+                        showConfirmButton: false,
+                      });
+                      setTimeout(() => {
+                        window.location.reload();
+                      }, 1800);
+                    } catch (err) {
+                      setGeneralIsLoading(false);
+
+                      console.log(err);
                       Swal.fire({
                         icon: "error",
                         title: "Oops...",
-                        text: "All Fields Are Required !",
+                        text: "Something went wrong (Please Refresh and try again)!",
                       });
-                      e.preventDefault();
-                      return;
                     }
-                    addOpt(formValues);
-                    onClose();
                   }}
                 >
                   <ModalHeader className="flex flex-col gap-1 "> {label}</ModalHeader>
@@ -76,10 +106,18 @@ export const AddNew = ({
                     })}
                   </ModalBody>
                   <ModalFooter>
-                    <Button color="danger" variant="flat" onClick={onClose} className="p-2 px-3">
+                    <Button
+                      id="add-new-form"
+                      form="add-new-form"
+                      color="danger"
+                      variant="flat"
+                      // onClick={onClose}
+
+                      className="p-2 px-3"
+                    >
                       Close
                     </Button>
-                    <Button color="primary" type="submit" className="p-2 px-3">
+                    <Button form="add-new-form" color="primary" type="submit" className="p-2 px-3">
                       Add
                     </Button>
                   </ModalFooter>

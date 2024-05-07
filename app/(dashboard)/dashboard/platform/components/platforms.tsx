@@ -44,7 +44,7 @@ export const Platforms = ({ tableData }: { tableData?: any }) => {
         </div> */}
         <div className="flex flex-row gap-3.5 flex-wrap ml-auto">
           <AddNew
-            addOpt={addOptData}
+            // addOpt={addOptData}
             tableName={`platform`}
             inputs={inputs}
             label="Add New Platform"

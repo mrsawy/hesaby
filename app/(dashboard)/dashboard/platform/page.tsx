@@ -6,6 +6,9 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import prisma from "@/prisma/db";
 import s3 from "@/s3";
 
+export const dynamic = "force-dynamic";
+
+
 const MainPlatformComponent = async () => {
   const platforms = await prisma.platform.findMany();
 

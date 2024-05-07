@@ -20,13 +20,13 @@ import Image from "next/image";
 const SliderSection = () => {
   return (
     <AwesomeSlider
-      // startupDelay?: number;
-      startupDelay={3000}
+      startupDelay={2000}
       // play={true}
       // cancelOnInteraction={false}
       // interval={6000}
-      animation="fallAnimation"
-      // animation="openAnimation"
+      bullets={false}
+      // buttons={false}
+      animation="openAnimation"
       className="2xl:h-[96vh]"
     >
       {sliderContent.map(({ background, titleAsImage, price, url, id }) => (

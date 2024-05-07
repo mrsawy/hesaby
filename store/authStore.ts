@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { persist, StateStorage, createJSONStorage } from "zustand/middleware";
+import { persist } from "zustand/middleware";
 
 import { getCookie, setCookie, deleteCookie } from "cookies-next";
 
@@ -31,7 +31,7 @@ const useAuthStore = create<AuthState>()(
       ...initialState,
     }),
 
-    { name: "auth-store" }
+    { name: "auth-store", skipHydration: true }
   )
 );
 

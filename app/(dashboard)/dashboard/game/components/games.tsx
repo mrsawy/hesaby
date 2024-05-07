@@ -1,3 +1,15 @@
+
+
+
+
+
+
+
+
+
+
+
+
 "use client";
 import { Button, Input, TableCell, TableRow } from "@nextui-org/react";
 import Link from "next/link";
@@ -18,7 +30,6 @@ export const Games = ({ tableData }: Props) => {
   const inputs = [
     { title: `Title`, name: `title`, type: `text` },
     { title: `Description`, name: `description`, type: `text` },
-    // { title: `Platform`, name: `platform_id`, type: `select`, options },
     { title: `Game Image`, name: `gameImg`, type: `file`, multiple: false },
   ];
 
@@ -49,7 +60,7 @@ export const Games = ({ tableData }: Props) => {
           />
         </div> */}
         <div className="flex flex-row gap-3.5 flex-wrap ml-auto">
-          <AddNew addOpt={addOptData} tableName={`game`} inputs={inputs} label="Add New Game" />
+          <AddNew  tableName={`game`} inputs={inputs} label="Add New Game" />
         </div>
       </div>
       <div className="max-w-[95rem] mx-auto w-full">
@@ -59,6 +70,7 @@ export const Games = ({ tableData }: Props) => {
             { name: "Image", uid: "image" },
             { name: "Title", uid: "Title" },
             { name: "Description", uid: "Description" },
+            { name: "Is Featured", uid: "IsFeatured" },
             { name: "ACTIONS", uid: "actions" },
           ]}
           bodyData={optData}
