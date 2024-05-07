@@ -17,16 +17,22 @@ export default async function Page({ params }: any) {
       `${userToken}` as string,
       new TextEncoder().encode(process.env.JWT_SECRET)
     );
+    console.log(payload);
     if (payload.id == id) {
       sameUser = true;
     }
-  } catch (error) {}
+  } catch (error) {
+    console.log(error)
+  }
 
   return (
-    <div>
-      <div className="w-full"></div>
+    <div className="h-screen flex items-center dark:text-gray-400 justify-center w-full">
+      {/* <div className="w-full">/ */}
 
       {id}
+      <br />
+      {sameUser ? `true` : `false`}
+      {/* </div> */}
     </div>
   );
 }
