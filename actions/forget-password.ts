@@ -12,7 +12,7 @@ const RESEND_API_KEY: string = process.env.RESEND_API_KEY as string;
 const ROUNDS_OF_HASHING = Number(process.env.ROUNDS_OF_HASHING);
 const resend = new Resend(RESEND_API_KEY);
 
-export const dynamic = "force-dynamic";
+// export const dynamic = "force-dynamic";
 
 const sendForgetPasswordEmail = async (email: string) => {
   let user = await prisma.user.findUnique({
