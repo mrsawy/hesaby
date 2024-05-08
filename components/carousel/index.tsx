@@ -27,7 +27,7 @@ export default function CarouselSize({
   cardClassName,
   carouselItemClassName,
 }: {
-  data: any[];
+  data?: any[];
   btnTxt?: string | React.ReactNode;
   btnTextPrice: boolean;
   label?: string;
