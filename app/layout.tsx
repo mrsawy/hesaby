@@ -14,6 +14,8 @@ export const metadata: Metadata = {
   description: "Hesaby Dashboard",
 };
 
+export const revalidate = 10;
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">

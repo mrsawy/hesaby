@@ -7,6 +7,9 @@ import getImageUrl from "@/lib/backend/getImageUrl";
 import { VortexSection } from "./sections/VortexSection";
 import SliderAdSection from "./sections/SliderAdSection";
 
+
+
+
 async function page() {
   let featuredGames = await prisma.game.findMany({
     where: {

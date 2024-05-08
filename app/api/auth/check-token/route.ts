@@ -16,7 +16,7 @@ export const POST = async (request: Request) => {
     );
     let user = await prisma.user.findFirst({
       where: {
-        email: `${payload.email}`,
+        id: `${payload.id}`,
       },
     });
     if (!user) throw Error("User not found");

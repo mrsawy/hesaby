@@ -1,6 +1,5 @@
 "use server";
 
-import bcrypt from "bcrypt";
 import { Prisma as PrismaType } from "@prisma/client";
 import { prisma } from "@/prisma/db";
 import TableName from "@/types/table-names";
@@ -16,22 +15,18 @@ import s3 from "@/s3";
 import handleUploadFilesS3 from "@/lib/backend/s3Upload";
 import handleDeleteFileS3 from "@/lib/backend/s3Delete";
 // const { S3Client, ListBucketsCommand } = require("@aws-sdk/client-s3");
-import { editGameAndPlatformSchema, editUserSchema } from "@/lib/formSchemas";
+import { editGameAndPlatformSchema, editProfileSchema, editUserSchema } from "@/lib/formSchemas";
 
-export const editUser = async (userData: any, formData: FormData) => {
+export const editProfile = async (userData: any, formData: FormData) => {
   let profileImg = Object.fromEntries(formData.entries()).profileImg,
     coverImg = Object.fromEntries(formData.entries()).coverImg;
 
-  editUserSchema.validateSync({ ...userData, profileImg, coverImg });
+  editProfileSchema.validateSync({ ...userData, profileImg, coverImg });
 
   let updatedData: any = {
     firstName: userData.firstName as string,
     lastName: userData.lastName as string,
     bio: userData.bio as string,
-    isBlocked: userData.isBlocked,
-    isWithdrawRequested: userData.isWithdrawRequested,
-    isEmailVerified: userData.isEmailVerified,
-    isPhoneVerified: userData.isPhoneVerified,
     email: userData.email,
     iban: userData.iban,
     phoneNumber: userData.phoneNumber,
@@ -85,16 +80,6 @@ export const editUser = async (userData: any, formData: FormData) => {
     if (!uploadOk) throw new Error("Error while uploading cover  image");
     updatedData.coverImg = name;
   }
-
-  // _password
-  if (userData.password) {
-    // console.log(`ppppppassssssssssswwwwwordddddddddddd==========>`, userData.password);
-    updatedData.password = await bcrypt.hash(
-      userData.password,
-      Number(process.env.ROUNDS_OF_HASHING) as number
-    );
-  }
-  //
 
   let updatedUser = await prisma.user.update({
     where: { id: userData.id },

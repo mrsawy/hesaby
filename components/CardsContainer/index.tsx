@@ -29,6 +29,7 @@ export default function Container({
           style={{ minHeight: `70vh` }}
           className="border rounded-xl p-4 dark:border-gray-800 lg:px-3 flex flex-wrap justify-center items-start gap-y-9 w-auto m-auto md:mx-3"
         >
+          {data && data.length < 1 && <div>No Data Were Found</div>}
           {data &&
             data.map((e: any, index: number) => {
               return (

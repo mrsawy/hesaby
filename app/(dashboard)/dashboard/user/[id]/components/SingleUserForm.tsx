@@ -37,7 +37,11 @@ export default function SingleUserForm({ user }: any) {
   const [formInputs, setFormInputs] = useState({
     firstName: user.firstName,
     lastName: user.lastName,
+    email: user.email,
+    phoneNumber: user.phoneNumber,
     bio: user.bio,
+    iban: user.iban,
+    password: ``,
   });
 
   const handleChange = (e: any) => {
@@ -75,20 +79,18 @@ export default function SingleUserForm({ user }: any) {
             firstName: formInputs.firstName,
             lastName: formInputs.lastName,
             bio: formInputs.bio,
-            // profileImg:
-            //   Array.isArray(profileImage) && profileImage.length > 0 ? profileImage[0] : null,
-            // coverImg: Array.isArray(coverImage) && coverImage.length > 0 ? coverImage[0] : null,
+            password: formInputs.password,
             isBlocked,
             isWithdrawRequested,
+            phoneNumber: formInputs.phoneNumber,
             isEmailVerified,
             isPhoneVerified,
             id: user.id,
-            email: user.email,
+            email: formInputs.email,
             profileImgKey: user?.profileImg,
             coverImgKey: user?.coverImg,
+            iban: formInputs.iban,
           };
-          console.log(userData);
-
           profileImage.forEach((image, index) => {
             formData.append(`profileImg`, image);
           });
@@ -100,7 +102,6 @@ export default function SingleUserForm({ user }: any) {
             profileImg: Object.fromEntries(formData.entries()).profileImg,
             coverImg: Object.fromEntries(formData.entries()).coverImg,
           });
-
           //
           formData.delete(`filepond`);
           //   console.log({ formData: Object.fromEntries(formData.entries()) });
@@ -210,20 +211,10 @@ export default function SingleUserForm({ user }: any) {
           containerClassName="w-full flex-grow"
           label=" IBAN"
           placeholder="User IBAN"
-          // name="email"
-          value={user?.iban}
-          disabled={true}
-        />
-       
-      </div>
-      <div className="flex flex-col sm:flex-row gap-2">
-        <Input
-          containerClassName="w-full flex-grow"
-          label=" Email"
-          placeholder="User Email"
-          // name="email"
-          value={user?.email}
-          disabled={true}
+          name="iban"
+          onChange={handleChange}
+          value={formInputs?.iban}
+          // disabled={tru/e}
         />
         <Input
           containerClassName="w-full flex-grow"
@@ -232,6 +223,40 @@ export default function SingleUserForm({ user }: any) {
           //   name="balance"
           value={user.balance}
           disabled={true}
+        />
+      </div>
+      <div className="flex flex-col sm:flex-row gap-2">
+        <Input
+          containerClassName="w-full flex-grow"
+          label=" Email"
+          placeholder="User Email"
+          name="email"
+          value={formInputs?.email}
+          onChange={handleChange}
+          disabled={isEmailVerified}
+        />
+        <Input
+          containerClassName="w-full flex-grow"
+          label="User Phone Number"
+          placeholder="User Phone Number"
+          name="phoneNumber"
+          value={formInputs.phoneNumber}
+          disabled={isPhoneVerified}
+          onChange={handleChange}
+          isNumber={true}
+        />
+      </div>
+
+      <div className="flex flex-col sm:flex-row gap-2">
+        <Input
+          containerClassName="w-full flex-grow"
+          label="User Password "
+          placeholder="Password"
+          name="password"
+          value={formInputs.password}
+          // disabled={isPhoneVerified}
+          onChange={handleChange}
+          // isNumber={true}
         />
       </div>
 
@@ -313,7 +338,7 @@ export default function SingleUserForm({ user }: any) {
               onClick={() => handleMainClick()}
               className=" w-10/12  cursor-pointer relative  text-center m-auto"
             >
-              <img alt="game" src={user.profileUrl} />
+              <img alt="game" src={user.profileUrl} className="m-auto" />
             </div>
           </div>
 
@@ -350,10 +375,10 @@ export default function SingleUserForm({ user }: any) {
           />
           <div className=" w-full mt-5 mb-2 text-center">
             <div
-              onClick={() => handleMainClick()}
+              onClick={() => handleCoverClick()}
               className=" w-10/12  cursor-pointer relative  text-center m-auto"
             >
-              <img alt="game" src={user.coverUrl} />
+              <img alt="game" src={user.coverUrl} className="m-auto" />
             </div>
           </div>
 

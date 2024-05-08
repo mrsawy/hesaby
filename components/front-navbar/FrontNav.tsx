@@ -199,10 +199,10 @@ export default function Example() {
                                 onClick={(e) => {
                                   e.preventDefault();
                                   // authDispatch({ type: `LOGOUT` });
+                                  setLogout();
                                   setTimeout(() => {
-                                    setLogout();
                                     // window.location.reload();
-                                    // window.location.href = "/";
+                                    window.location.href = "/";
                                   }, 200);
                                 }}
                               >

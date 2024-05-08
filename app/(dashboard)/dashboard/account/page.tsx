@@ -17,7 +17,7 @@ const Account = async () => {
       seller: true,
     },
   });
-  console.log(accounts);
+  // console.log(accounts);
   try {
     const promises = accounts.map(async (account) => {
       try {

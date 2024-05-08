@@ -57,7 +57,9 @@ export default function App({
           <p className="text-black text-tiny">Get notified.</p>
         </div> */}
         <Link href={btnUrl} className={`max-[500px]:m-auto`}>
-          <Button className="text-[0.6rem]  px-2 sm:px-5   ">{btnTxt}</Button>
+          <Button className="text-[0.6rem]  px-2 sm:px-5  md:text-lg 2xl:text-lg ">
+            {btnTxt}
+          </Button>
         </Link>
       </CardFooter>
     </Card>

@@ -1,6 +1,7 @@
 "use client";
 
 import { Button, Input, TableCell, TableRow } from "@nextui-org/react";
+import Swal from "sweetalert2";
 import Image from "next/image";
 import { User, Tooltip, Chip } from "@nextui-org/react";
 import { DeleteIcon } from "@/components/icons/table/delete-icon";
@@ -8,6 +9,8 @@ import { EditIcon } from "@/components/icons/table/edit-icon";
 import { isValidUrl } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import useGeneralStore from "@/store/generalStore";
+import { deleteUserAction } from "@/actions/admin/user/delete-user";
 
 const BodyComponentRenderFunction = (ele: {
   profileImg: string;
@@ -19,6 +22,7 @@ const BodyComponentRenderFunction = (ele: {
   balance: string | number;
   id: string;
 }) => {
+  let setGeneralIsLoading = useGeneralStore((s) => s.setGeneralIsLoading);
   let imageUrl;
   try {
     imageUrl = ele?.profileImg ? ele?.profileImg : `/image_placeholder.jpg`;
@@ -53,27 +57,6 @@ const BodyComponentRenderFunction = (ele: {
       <TableCell>
         <div>{ele?.balance ?? ``}</div>
       </TableCell>
-      {/* <TableCell>
-        <Chip
-          size="sm"
-          variant="flat"
-          color={
-            ele?.status === "accepted"
-              ? "success"
-              : ele?.status === "declined"
-              ? "danger"
-              : "warning"
-          }
-        >
-          <span className="capitalize text-xs">{ele?.status}</span>
-        </Chip>
-      </TableCell> */}
-      {/* <TableCell>
-        <div>{`Data`}</div>
-      </TableCell>
-      <TableCell>
-        <div>{`Seller`}</div>
-      </TableCell> */}
 
       <TableCell>
         <div>
@@ -88,13 +71,55 @@ const BodyComponentRenderFunction = (ele: {
               </Tooltip>
             </div>
 
-            <div>
+            <form
+              action={async () => {
+                console.log(`delete ${ele?.id}`);
+                try {
+                  let result = await Swal.fire({
+                    title:
+                      "Do You Want To Delete This User ?  (all accounts associated will be deleted too)",
+                    showCancelButton: true,
+                    confirmButtonText: "Yes",
+                  });
+
+                  if (result.isConfirmed) {
+                    // setIsLoading(true);
+                    setGeneralIsLoading(true);
+
+                    let deletedUser = await deleteUserAction(ele?.id);
+                    // setIsLoading(false);
+                    setGeneralIsLoading(false);
+
+                    if (deletedUser) {
+                      Swal.fire({
+                        icon: "success",
+                        title: "Deleted!",
+                        text: "User has been deleted.",
+                        timer: 20000,
+                        allowOutsideClick: false,
+                        showConfirmButton: false,
+                      });
+                      setTimeout(() => {
+                        window.location.reload();
+                      }, 1800);
+                    }
+                  }
+                } catch (e) {
+                  console.log(e);
+                  Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Something went wrong (Please Refresh and try again)!",
+                  });
+                }
+              }}
+            >
               <Tooltip content="Delete " color="danger" onClick={() => console.log("Delete ")}>
                 <button>
                   <DeleteIcon size={20} fill="#FF0080" />
                 </button>
               </Tooltip>
-            </div>
+            </form>
           </div>
           {/*  */}
         </div>

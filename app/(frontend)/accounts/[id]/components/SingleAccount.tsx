@@ -8,6 +8,7 @@ import { Avatar } from "@nextui-org/react";
 
 import Button from "@/components/main-button";
 import AddToCartIcon from "@/components/icons/AddToCartIcon";
+import Link from "next/link";
 
 export default function SingleAccount({
   gallery,
@@ -35,21 +36,27 @@ export default function SingleAccount({
           <div className="flex h-5 items-center space-x-4 text-small justify-center ">
             <div className="flex flex-col gap-1">
               <div>البائع</div>
-              <div className="flex gap-1  justify-center items-center">
-                <Avatar src={sellerImg} alt="seller profile image" name={account.seller.title} />
-                <div>
-                  {account?.seller?.firstName} {account?.seller?.lastName}
+              <Link href={`/profile/${account?.seller?.id}`}>
+                <div className="flex gap-1  justify-center items-center">
+                  <Avatar
+                    src={sellerImg}
+                    alt={account?.seller?.firstName + account?.seller?.lastName}
+                  />
+                  <div>
+                    {account?.seller?.firstName} {account?.seller?.lastName}
+                  </div>
                 </div>
-              </div>
+              </Link>
             </div>
             <Divider orientation="vertical" />
             <div className="flex flex-col gap-1">
               <div>اللعبة</div>
-              <div className="flex gap-1  justify-center items-center">
-                <Avatar src={gameImgUrl} alt="game  image" name={account.game.title} />
-
-                <div>{account?.game?.title}</div>
-              </div>
+              <Link href={`/games/${account?.game?.id}?gameName=${account.game.title}`}>
+                <div className="flex gap-1  justify-center items-center">
+                  <Avatar src={gameImgUrl} alt={account.game.title} name={account.game.title} />
+                  <div>{account?.game?.title}</div>
+                </div>
+              </Link>
             </div>
             <Divider orientation="vertical" />
 
@@ -63,18 +70,19 @@ export default function SingleAccount({
           </div>
           <Divider className="mt-8 mb-6" />
 
-          <Button className="m-auto py-2 px-4 mb-3">
-            <div className="flex  gap-4  ">
-              <div className="flex gap-1 md:gap-2 ">
-                <p>{account.price}</p>
-                <span>SR</span>
+          {account?.status == `accepted` && (
+            <Button className="m-auto py-2 px-4 mb-3">
+              <div className="flex  gap-4  ">
+                <div className="flex gap-1 md:gap-2 ">
+                  <p>{account.price}</p>
+                  <span>SR</span>
+                </div>
+                <div>
+                  <AddToCartIcon className="text-md lg:text-2xl" />
+                </div>
               </div>
-              <div>
-                <AddToCartIcon className="text-md lg:text-2xl" />
-              </div>
-            </div>
-          </Button>
-
+            </Button>
+          )}
           {/* </div> */}
         </div>
       </div>

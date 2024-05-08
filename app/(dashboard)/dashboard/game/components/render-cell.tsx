@@ -125,13 +125,9 @@ const BodyComponentRenderFunction = (ele: {
                   });
                 }
               }}
-              // id={`delete`}
             >
               <Tooltip content="Delete " color="danger">
-                <button
-                  //  form="delete"
-                  type="submit"
-                >
+                <button type="submit">
                   <DeleteIcon size={20} fill="#FF0080" />
                 </button>
               </Tooltip>

@@ -2,6 +2,7 @@ import React from "react";
 import { Tabs, Tab, Card, CardBody, CardHeader } from "@nextui-org/react";
 import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
 import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
+import PriceCheckIcon from "@mui/icons-material/PriceCheck";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import HourglassFullIcon from "@mui/icons-material/HourglassFull";
@@ -11,13 +12,21 @@ export default function StatusGroup({
   status,
   onChange,
 }: {
-  status: "accepted" | "pending" | "declined";
+  status: "accepted" | "pending" | "declined" | "sold";
   onChange: Function;
 }) {
   let [selected, setSelected] = React.useState(status);
   let [color, setColor] = React.useState<
-    "primary" | "secondary" | "success" | "warning" | "danger"
-  >(status === "accepted" ? "success" : status === "pending" ? "warning" : "danger");
+    "primary" | "primary" | "success" | "warning" | "danger"
+  >(
+    status === "accepted"
+      ? "success"
+      : status === "pending"
+      ? "warning"
+      : status === `sold`
+      ? `primary`
+      : "danger"
+  );
 
   return (
     <div className="flex w-full flex-row w-ful gap-2">
@@ -37,7 +46,6 @@ export default function StatusGroup({
                 setSelected("accepted");
                 onChange("accepted");
                 setColor(`success`);
-
               }}
               className="flex items-center space-x-2 w-full  py-1 px-10 "
             >
@@ -67,7 +75,6 @@ export default function StatusGroup({
         <Tab
           key="declined"
           className="w-full py-5 "
-
           title={
             <div
               onClick={() => {
@@ -79,6 +86,23 @@ export default function StatusGroup({
             >
               <ThumbDownAltIcon />
               <span>Declined</span>
+            </div>
+          }
+        />
+        <Tab
+          key="sold"
+          className="w-full py-5 "
+          title={
+            <div
+              onClick={() => {
+                setSelected("sold");
+                onChange("sold");
+                setColor(`primary`);
+              }}
+              className="flex items-center space-x-2 w-full h-full"
+            >
+              <PriceCheckIcon />
+              <span>Sold</span>
             </div>
           }
         />

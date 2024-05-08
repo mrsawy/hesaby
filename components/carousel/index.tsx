@@ -24,13 +24,17 @@ export default function CarouselSize({
   btnTxt,
   btnTextPrice,
   btnUrlPrefix,
+  cardClassName,
+  carouselItemClassName,
 }: {
   data: any[];
-  btnTxt: string | React.ReactNode;
+  btnTxt?: string | React.ReactNode;
   btnTextPrice: boolean;
-  label: string;
+  label?: string;
   enableDecs: boolean;
   btnUrlPrefix: string;
+  cardClassName?: string;
+  carouselItemClassName?: string;
 }) {
   // console.log(`enableDecs CarouselSize index`, enableDecs);
 
@@ -41,9 +45,11 @@ export default function CarouselSize({
       }}
       className="w-full lg:my-24"
     >
-      <label className="text-center  font-bold lg:text-[3rem] py-8 flex justify-start">
-        {label}
-      </label>
+      {label && (
+        <label className="text-center  font-bold lg:text-[3rem] py-8 flex justify-start">
+          {label}
+        </label>
+      )}
 
       <CarouselContent className="gap-0 lg:gap-0 xl:gap-1 justify-start   ">
         {data.map((_, index) => (
@@ -51,7 +57,8 @@ export default function CarouselSize({
             key={index}
             className={cn(
               "basis-1/2 md:basis-1/3 xl:basis-1/3 2xl:basis-1/4 ",
-              `   sm:w-auto`
+              `   sm:w-auto`,
+              carouselItemClassName
               // ` xl:my-8 xxl:mx-12`
             )}
           >
@@ -61,7 +68,8 @@ export default function CarouselSize({
                 img={data[index].imgUrl}
                 id={data[index].id}
                 className={cn(
-                  " h-[12rem] sm:h-[15rem]  lg:h-[17rem] min-[1100px]:h-[20rem]  2xl:h-[25rem]  m-auto sm:mx-6"
+                  " h-[12rem] sm:h-[15rem]  lg:h-[17rem] min-[1100px]:h-[20rem]  2xl:h-[25rem]  m-auto sm:mx-6",
+                  cardClassName
                 )}
                 desc={enableDecs ? data[index].description : undefined}
                 // enableDecs={enableDecs}
@@ -79,13 +87,17 @@ export default function CarouselSize({
                       </div>
                       <ShoppingCartCheckoutIcon className="text-xs sm:text-md lg:text-lg" />
                     </div>
+                  ) : btnTxt ? (
+                    btnTxt
                   ) : (
-                    <div className="text-xs sm:text-md lg:text-lg flex-row flex justify-center items-center ">{btnTxt}</div>
+                    `Details`
                   )
                 }
               />
             </div>
 
+            {/* // <div className="text-xs sm:text-md lg:text-lg flex-row flex justify-center items-center "> */}
+            {/* </div> */}
             {/* lg:w-[20rem] xl:w-[24rem]  */}
             {/* <Carde3d /> */}
           </CarouselItem>

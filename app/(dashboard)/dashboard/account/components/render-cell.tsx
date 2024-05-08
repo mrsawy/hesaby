@@ -78,6 +78,8 @@ const BodyComponentRenderFunction: React.FunctionComponent<BodyComponentProps> =
               ? "success"
               : ele?.status === "declined"
               ? "danger"
+              : ele?.status === "sold"
+              ? `primary`
               : "warning"
           }
         >

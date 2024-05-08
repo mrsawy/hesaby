@@ -52,6 +52,7 @@ model Platform {
 model Account {
   id             String         @id @default(cuid())
   isFeatured     Boolean        @default(false)
+  isSold         Boolean        @default(false)
   status         String
   title          String
   description    String

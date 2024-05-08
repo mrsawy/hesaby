@@ -9,11 +9,15 @@ export const userSignup = yup.object().shape({
   firstName: yup
     .string()
     .matches(/^\S*$/, "First name should contain only one word")
+    .max(12, "first name must be at least than 12 characters")
 
     .required(),
   lastName: yup
     .string()
-    .matches(/^\S*$/, "First name should contain only one word")
+    .matches(/^\S*$/, "last name should contain only one word")
+
+    // .matches(/^\S*$/, "First name should contain only one word")
+    .max(12, "last name must be at least than 12 characters")
 
     .required(),
   password: yup.string().min(6).required(),
@@ -188,17 +192,29 @@ export const resetPasswordSchema = yup.object().shape({
 
 export const editUserSchema = yup.object().shape({
   email: yup.string().email().required(),
+  password: yup
+    .string()
+    .optional()
+    .nullable()
+    .matches(/^$|^\S{5,50}$/, "Password must be empty or contain 5 to 50 characters"),
+
+  iban: yup
+    .string()
+    .matches(/^$|^\S{8,40}$/, "IBAN must be empty or contain 8 to 40 characters")
+    .nullable(),
+
+  phoneNumber: yup.string().min(8).max(14).required(),
   id: yup.string().required(),
   firstName: yup
     .string()
     .matches(/^\S*$/, "First name should contain only one word")
 
-    .max(9, "first name must be at least than 9 characters"),
+    .max(12, "first name must be at least than 12 characters"),
   lastName: yup
     .string()
     .matches(/^\S*$/, "First name should contain only one word")
 
-    .max(9, "last name must be at least than 9 characters"),
+    .max(12, "last name must be at least than 12 characters"),
   bio: yup.string().max(150, "last name must be at least than 9 characters").optional().nullable(),
   profileImg: yup
     .mixed()
@@ -250,4 +266,75 @@ export const editUserSchema = yup.object().shape({
   isWithdrawRequested: yup.boolean().required(),
   isEmailVerified: yup.boolean().required(),
   isPhoneVerified: yup.boolean().required(),
+});
+
+export const editProfileSchema = yup.object().shape({
+  email: yup.string().email().required(),
+  password: yup
+  .string()
+  .optional()
+  .nullable()
+  .matches(/^$|^\S{5,50}$/, "Password must be empty or contain 5 to 50 characters"),
+
+  iban: yup
+    .string()
+    .matches(/^$|^\S{8,40}$/, "IBAN must be empty or contain 8 to 40 characters")
+    .nullable(),
+  phoneNumber: yup.string().min(8).max(14).required(),
+  id: yup.string().required(),
+  firstName: yup
+    .string()
+    .matches(/^\S*$/, "First name should contain only one word")
+    .max(12, "first name must be at least than 12 characters"),
+  lastName: yup
+    .string()
+    .matches(/^\S*$/, "last name should contain only one word")
+    .max(12, "last name must be at least than 12 characters"),
+  bio: yup.string().max(150, "last name must be at least than 9 characters").optional().nullable(),
+  profileImg: yup
+    .mixed()
+    .test(
+      "fileSize",
+      "profile image is too large",
+      (value: any) => (value && value[0] ? value[0].size <= 1024 * 1024 * 6 : true) // 6MB limit
+    )
+    .test("isImage", "main image must be an image", function (value: any) {
+      if (value == "undefined" || value)
+        return (
+          value &&
+          (value.type === "image/jpg" ||
+            value.type === "image/jpeg" ||
+            value.type === "image/png" ||
+            value.type === "image/webp")
+        );
+      else {
+        return true;
+      }
+    })
+    .optional()
+    .nullable(),
+  profileImgKey: yup.string().max(200).optional().nullable(),
+  coverImgKey: yup.string().max(200).optional().nullable(),
+  coverImg: yup
+    .mixed()
+    .test(
+      "fileSize",
+      "Cover image is too large",
+      (value: any) => (value && value[0] ? value[0].size <= 1024 * 1024 * 6 : true) // 6MB limit
+    )
+    .test("isImage", "main image must be an image", function (value: any) {
+      if (value == "undefined" || value)
+        return (
+          value &&
+          (value.type === "image/jpg" ||
+            value.type === "image/jpeg" ||
+            value.type === "image/png" ||
+            value.type === "image/webp")
+        );
+      else {
+        return true;
+      }
+    })
+    .optional()
+    .nullable(),
 });
