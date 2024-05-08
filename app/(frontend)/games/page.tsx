@@ -4,12 +4,7 @@ import getImageUrl from "@/lib/backend/getImageUrl";
 import CardsContainer from "@/components/CardsContainer";
 import SearchForm from "@/components/SearchForm";
 
-
-
-
 export const dynamic = "force-dynamic";
-
-
 
 export default async function allGames({ params, searchParams }: any) {
   let gamesData: any[] | undefined;
@@ -35,10 +30,11 @@ export default async function allGames({ params, searchParams }: any) {
       <SearchForm defaultValue={keyword ?? ``} className={`mx-3 sm:mx-auto`} table={`games`} />
 
       <CardsContainer
-       btnUrlPrefix="/games/"
-       btnTextPrice={false}
-       btnTxt={`SEE MORE`}
-      data={result} />
+        btnUrlPrefix="/games/"
+        btnTextPrice={false}
+        btnTxt={`SEE MORE`}
+        data={result}
+      />
     </div>
   );
 }
