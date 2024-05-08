@@ -4,6 +4,13 @@ import getImageUrl from "@/lib/backend/getImageUrl";
 import CardsContainer from "@/components/CardsContainer";
 import SearchForm from "@/components/SearchForm";
 
+
+
+
+export const dynamic = "force-dynamic";
+
+
+
 export default async function allGames({ params, searchParams }: any) {
   let gamesData: any[] | undefined;
   let keyword = searchParams?.keyword ?? ``;

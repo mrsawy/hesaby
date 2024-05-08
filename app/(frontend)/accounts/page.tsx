@@ -5,6 +5,9 @@ import CardsContainer from "@/components/CardsContainer";
 import SearchForm from "@/components/SearchForm";
 import FilterSideBar from "./components/FilterSideBar";
 
+export const dynamic = "force-dynamic";
+
+
 // FilterSideBar
 export default async function allAccounts({ params, searchParams }: any) {
   //   let data: any[] | undefined;

@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   description: "Hesaby Dashboard",
 };
 
-export const revalidate = 60 * 5;
+export const revalidate = 10;
 
 // export const dynamic =  'force-dynamic';
 
