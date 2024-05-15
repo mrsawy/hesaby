@@ -14,6 +14,7 @@ export default async function Featured() {
     where: {
       isFeatured: true,
     },
+    include: { game: true, platform: true, seller: true },
   });
 
   let gameData = await getImageUrl({ data: featuredGames, key: "gameImg" });

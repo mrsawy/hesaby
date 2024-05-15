@@ -61,7 +61,7 @@ export function CartLineItems({
                       {item?.imgUrl ? (
                         <Image
                           src={item.imgUrl ?? "/images/product-placeholder.webp"}
-                          alt={item.title ?? `gaming account`}
+                          alt={`${item?.title}` ?? `gaming account`}
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                           fill
                           className="absolute object-cover"
@@ -80,7 +80,7 @@ export function CartLineItems({
                 ) : null}
                 <div className="flex flex-col space-y-1 self-start ">
                   <Link href={`/accounts/${item?.id}`}>
-                    <span className="line-clamp-1 text-sm font-medium">{item.title}</span>
+                    <span className="line-clamp-1 text-sm font-medium">{`${item?.title ?? `Account`}`}</span>
                   </Link>
 
                   <span className="line-clamp-1 text-sm lg:text-md text-muted-foreground">
