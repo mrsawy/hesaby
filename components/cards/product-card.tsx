@@ -71,7 +71,7 @@ export function ProductCard({
             <PlaceholderImage className="rounded-none" asChild />
           )}
           {type == `account` && (
-            <div className="absolute mt-2 mx-2 flex flex-col gap-2 left-0">
+            <div className="absolute mt-2 mx-2 flex flex-col gap-2 left-0 card">
               <CartIcon account={product} />
               <WishListIcon account={product}  />
             </div>
