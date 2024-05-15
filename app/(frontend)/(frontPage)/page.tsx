@@ -11,6 +11,9 @@ import SliderAdSection from "./sections/SliderAdSection";
 import HowItWorks from "./sections/HowItWorks";
 import { About } from "../about-us/_components/about";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 20;
+
 async function page() {
   return (
     <div>

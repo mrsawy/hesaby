@@ -1,4 +1,3 @@
-
 import React from "react";
 
 import type { Metadata } from "next";
@@ -15,6 +14,10 @@ import "sweetalert2/src/sweetalert2.scss";
 // };
 
 // import i18n from "@/components/lang-providor";
+
+
+export const dynamic = "force-dynamic";
+export const revalidate = 20;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

@@ -13,6 +13,10 @@ export const metadata: Metadata = {
 };
 // import "primereact/resources/themes/lara-light-cyan/theme.css";
 
+
+export const dynamic = "force-dynamic";
+export const revalidate = 20;
+
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   let siteData = await prisma.siteData.findMany();
   let data = await getSiteDataImgUrl(siteData);

@@ -38,7 +38,7 @@ model Game {
   description String
   gameImg     String?
   isFeatured  Boolean   @default(false)
-  accounts    Account[] @relation("accountGame")
+  accounts    Account[]
 }
 
 model Platform {
@@ -46,7 +46,7 @@ model Platform {
   title       String?
   description String?
   platformImg String?
-  accounts    Account[] @relation("accountPlatform")
+  accounts    Account[]
 }
 
 model Account {
@@ -60,24 +60,23 @@ model Account {
   password       String
   rejectedReason String?
   price          Float
-  game           Game           @relation("accountGame", fields: [game_id], references: [id], onDelete: Cascade)
+  game           Game           @relation(fields: [game_id], references: [id], onDelete: Cascade)
   game_id        String
   platform_id    String
-  seller         User           @relation(fields: [seller_id], references: [id])
+  seller         User           @relation(fields: [seller_id], references: [id], onDelete: Cascade)
   accountImg     String
   seller_id      String
   accountImages  AccountImage[]
   orders         Order[]
-  // carts          Cart[]
-  platform       Platform       @relation("accountPlatform", fields: [platform_id], references: [id], onDelete: Cascade)
-  carts          Cart[]
+  platform       Platform       @relation(fields: [platform_id], references: [id], onDelete: Cascade)
   wishLists      WishList[]
+  cart           Cart[]
 }
 
 model AccountImage {
   id         String  @id @default(cuid())
   image      String
-  account    Account @relation(fields: [account_id], references: [id])
+  account    Account @relation(fields: [account_id], references: [id], onDelete: Cascade)
   account_id String
 }
 
@@ -111,12 +110,12 @@ model User {
 
 model Order {
   id         String     @id @default(cuid())
-  account    Account    @relation(fields: [account_id], references: [id])
+  account    Account    @relation(fields: [account_id], references: [id], onDelete: Cascade)
   account_id String
   seller_id  String
   price      Float
   status     String
-  user       User       @relation(fields: [user_id], references: [id])
+  user       User       @relation(fields: [user_id], references: [id], onDelete: Cascade)
   user_id    String
   Withdraw   Withdraw[]
 
@@ -128,9 +127,9 @@ model Withdraw {
   status   String
   amount   Float
   paidAt   DateTime
-  order    Order    @relation(fields: [order_id], references: [id])
+  order    Order    @relation(fields: [order_id], references: [id], onDelete: Cascade)
   order_id String
-  user     User     @relation(fields: [user_id], references: [id])
+  user     User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
   user_id  String
 }
 
@@ -160,20 +159,22 @@ model SiteData {
 
 model Cart {
   id         String  @id @default(cuid())
-  account    Account @relation(fields: [account_id], references: [id])
+  account    Account @relation(fields: [account_id], references: [id], onDelete: Cascade)
   account_id String
   user_id    String
-  user       User    @relation(fields: [user_id], references: [id])
+  user       User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  accountId  String?
+  userId     String?
 
   @@unique([account_id, user_id], name: "Unique_Account_User")
 }
 
 model WishList {
   id         String  @id @default(cuid())
-  account    Account @relation(fields: [account_id], references: [id])
+  account    Account @relation(fields: [account_id], references: [id], onDelete: Cascade)
   account_id String
   user_id    String
-  user       User    @relation(fields: [user_id], references: [id])
+  user       User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   @@unique([account_id, user_id], name: "Unique_Account_User")
 }
