@@ -47,7 +47,7 @@ const ThemeSwitch = (props: any) => {
   } = useSwitch(props);
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2  max-h-11">
       <Component {...getBaseProps()}>
         <VisuallyHidden>
           <input {...getInputProps()} />
@@ -59,7 +59,8 @@ const ThemeSwitch = (props: any) => {
           }}
           className={slots.wrapper({
             class: [
-              "w-8 h-8",
+              // `max-h-11`,
+              "w-10 h-10",
               "flex items-center justify-center",
               "rounded-lg bg-default-100 hover:bg-default-200",
               `bg-gray-300`,

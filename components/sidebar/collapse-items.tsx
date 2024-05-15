@@ -4,28 +4,31 @@ import { ChevronUpIcon } from "../icons/sidebar/chevron-up-icon";
 import { Accordion, AccordionItem } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import clsx from "clsx";
+import { cn } from "@/lib/utils";
 //
 interface Props {
   icon: React.ReactNode;
   title: string;
   items: { text: string; href: string }[];
+  className?: string;
 }
 //
 
-export const CollapseItems = ({ icon, items, title }: Props) => {
+export const CollapseItems = ({ icon, items, title, className }: Props) => {
   const [open, setOpen] = useState(false);
   let router = useRouter();
 
   return (
-    <div className="flex gap-4 h-full items-center cursor-pointer">
+    <div className={cn("flex gap-4 h-full items-center cursor-pointer")}>
       <Accordion className="px-0">
         <AccordionItem
           indicator={<ChevronUpIcon />}
           classNames={{
             indicator: "data-[open=true]:-rotate-180",
-            trigger:
-              "py-0 min-h-[44px] hover:bg-default-100 rounded-xl active:scale-[0.98] transition-transform px-3.5",
-
+            trigger: cn(
+              className,
+              "py-0 min-h-[44px] hover:bg-default-100 rounded-xl active:scale-[0.98] transition-transform px-3.5"
+            ),
             title: "px-0 flex text-base gap-2 h-full items-center cursor-pointer",
           }}
           aria-label="Accordion 1"
@@ -43,7 +46,7 @@ export const CollapseItems = ({ icon, items, title }: Props) => {
                 className="w-full flex  text-default-500 hover:text-default-900 transition-colors mb-3"
                 onClick={() => router.push(item.href)}
               >
-               - {item?.text}
+                - {item?.text}
               </span>
             ))}
           </div>

@@ -11,7 +11,9 @@ import Link from "next/link";
 import UserInfo from "./components/UserInfo";
 import UserSittings from "./components/UserSittings";
 
-export default async function Page({ params }: any) {
+export default async function Page({ params, searchParams }: any) {
+  let edit = searchParams?.edit ?? false;
+
   const cookieStore = cookies();
   let id = params?.id ?? null;
   let user = await prisma.user.findUnique({
@@ -61,7 +63,7 @@ export default async function Page({ params }: any) {
         <UserInfo user={finalUser} />
 
         <div className="w-full md:w-3/4 p-5 border dark:border-zinc-600 rounded-md">
-          <UserSittings user={finalUser} sameUser={sameUser} />
+          <UserSittings edit={edit==`true`} user={finalUser} sameUser={sameUser} />
         </div>
       </div>
 

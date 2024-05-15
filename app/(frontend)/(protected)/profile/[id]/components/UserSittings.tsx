@@ -4,17 +4,34 @@ import React from "react";
 import { Tabs, Tab, Card, CardBody } from "@nextui-org/react";
 import Carousel from "@/components/carousel/";
 import EditProfile from "./EditProfile";
+import { AnyNode } from "postcss";
 
-function UserSittings({ user, sameUser }: { user: any; sameUser: boolean }) {
+function UserSittings({ user, sameUser, edit }: { edit: boolean; user: any; sameUser: boolean }) {
+  const [selected, setSelected] = React.useState<string>(
+    edit ? `edit_profile` : "accepted_accounts"
+  );
+  const handleSelectionChange = (key: any) => {
+    setSelected(key as string);
+  };
+
   return (
     <div className="flex w-full flex-col">
-      <Tabs aria-label="Options">
-        <Tab key="Accepted Accounts" title="Accepted Accounts">
+      <Tabs aria-label="Options" selectedKey={selected} onSelectionChange={handleSelectionChange}
+      
+      
+      //  className={`flex flex-col w-full lg:flex-row lg:flex-nowrap`}
+      
+      
+      className="w-full te child-w-full flex flex-col sm:flex-row flex-wrap-child-sm"
+      
+      >
+        <Tab key="accepted_accounts" title="Accepted Accounts">
           <Card>
             <CardBody className="px-12 sm:px-20">
               {user.accounts.filter((a: any) => a.status == `accepted`).length ? (
                 <Carousel
-                  enableDecs={true}
+                  // enableDecs={true}
+                  type="account"
                   data={user.accounts.filter((a: any) => a.status == `accepted`)}
                   btnTextPrice={true}
                   btnUrlPrefix={`/accounts/`}
@@ -30,7 +47,8 @@ function UserSittings({ user, sameUser }: { user: any; sameUser: boolean }) {
           <Card>
             {user.accounts.filter((a: any) => a.status == `sold`).length ? (
               <Carousel
-                enableDecs={true}
+                // enableDecs={true}
+                type="account"
                 data={user.accounts.filter((a: any) => a.status == `sold`)}
                 btnTextPrice={true}
                 btnUrlPrefix={`/accounts/`}
@@ -46,7 +64,8 @@ function UserSittings({ user, sameUser }: { user: any; sameUser: boolean }) {
             <Card>
               {user.accounts.filter((a: any) => a.status == `pending`).length ? (
                 <Carousel
-                  enableDecs={true}
+                  // enableDecs={true}
+                  type="account"
                   data={user.accounts.filter((a: any) => a.status == `pending`)}
                   btnTextPrice={true}
                   btnUrlPrefix={`/accounts/`}
@@ -59,7 +78,7 @@ function UserSittings({ user, sameUser }: { user: any; sameUser: boolean }) {
           </Tab>
         )}
         {sameUser && (
-          <Tab key="Edit Profile" title="Edit Profile">
+          <Tab key="edit_profile" title="Edit Profile">
             <Card>
               <CardBody>
                 <EditProfile user={user} />

@@ -7,7 +7,6 @@ import FilterSideBar from "./components/FilterSideBar";
 
 export const dynamic = "force-dynamic";
 
-
 // FilterSideBar
 export default async function allAccounts({ params, searchParams }: any) {
   //   let data: any[] | undefined;
@@ -49,6 +48,7 @@ export default async function allAccounts({ params, searchParams }: any) {
   const queryAccounts = await prisma.account.findMany({
     where: query,
     take: 20,
+    include: { game: true, platform: true },
   });
 
   //   return accounts;
@@ -69,7 +69,7 @@ export default async function allAccounts({ params, searchParams }: any) {
       <CardsContainer
         btnUrlPrefix="/accounts/"
         btnTextPrice={true}
-        
+        type={`account`}
         className="sm:mr-3 ml-auto sm:w-7/12 lg:w-9/12 2xl:w-[84%]"
         SideBar={<FilterSideBar games={games} platforms={platforms} />}
         data={result}

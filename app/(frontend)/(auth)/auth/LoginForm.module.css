@@ -17,6 +17,10 @@
 }
 @media screen and (max-width: 600px) {
   .form_container {
+    padding: 30px 5% 30px 5%;
+  }
+
+  .form_container {
     width: 100%;
   }
   .formexitDone {
@@ -54,7 +58,7 @@
   /* padding: 4px; */
   /* color: rgb(23, 16, 16); */
   background-color: aliceblue;
-  width: 195px;
+  width: 95%;
   padding: 0;
   height: 100%;
 }
@@ -83,6 +87,7 @@
   padding: 10px;
   padding-left: 15px;
   margin: 0;
+  text-align: center;
 }
 
 .chosen {
@@ -123,8 +128,22 @@
   border: none;
   background-color: transparent;
   color: rgb(255, 255, 255);
-  font-size: x-large;
+  font-size: large;
   outline: rgb(175, 42, 86);
+}
+
+@media screen and (max-width: 500px) {
+  .email_input,
+  .password_input,
+  .name_input {
+    width: 100%;
+    padding: 9px;
+    border: none;
+    background-color: transparent;
+    color: rgb(255, 255, 255);
+    font-size: medium;
+    outline: rgb(175, 42, 86);
+  }
 }
 
 .email_input:focus,

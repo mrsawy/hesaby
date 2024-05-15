@@ -2,6 +2,8 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 import { getCookie, setCookie, deleteCookie } from "cookies-next";
+import useCartStore, { setCart, setCartState } from "./cartStore";
+import useWishlistStore, { setWishlist, setWishListState } from "./wishlistStore";
 
 interface AuthState {
   user: any;
@@ -48,8 +50,19 @@ export const testAuth = async () => {
       body: JSON.stringify({ token: useAuthStore.getState().token }),
     });
     let { user, error } = await response.json();
+    // console.log(`testAuth`, { user });
     if (!response.ok) throw new Error();
+    
+    
     setLogin(user);
+
+    // useCartStore.setState({ cart: user.cart.map((ele: any) => ele.account) });
+    // useWishlistStore.setState({ wishlist: user.wishList.map((ele: any) => ele.account) });
+
+    setCartState(user);
+    setWishListState(user);
+
+    // return user;
   } catch (error) {
     console.log(error);
     setLogout();

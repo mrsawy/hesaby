@@ -19,12 +19,12 @@ export default function UserInfo({ user }: any) {
         />
       </div>
       <div className="flex flex-col gap-2 -translate-y-9">
-        <h1 className="text-3xl font-bold capitalize dark:text-zinc-100">
+        <h1 className="text-xl font-bold capitalize dark:text-zinc-100">
           {user.firstName} {user.lastName}
         </h1>
-        <Link href={`mailto:${user.email}`} className="dark:text-zinc-300">
+        {/* <Link href={`mailto:${user.email}`} className="dark:text-zinc-300">
           {user.email}
-        </Link>
+        </Link> */}
         <p>{user.bio}</p>
         {/*  */}
         <hr className="w-1/2 dark:border-zinc-700 m-auto my-4" />

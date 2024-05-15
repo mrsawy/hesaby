@@ -1,6 +1,8 @@
 import s3 from "@/s3";
 import { GetObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { SiteData } from "@prisma/client";
+import { promisify } from "util";
 
 export default async function getUrl({
   data,
@@ -33,7 +35,6 @@ export default async function getUrl({
     return result;
   } catch (error) {
     console.log(error);
-    
   }
 }
 
@@ -55,7 +56,6 @@ export async function getSingleUrl({ key }: { key: string | null | undefined }) 
   }
 }
 
-
 export async function getCoverUrl({ key }: { key: string | null | undefined }) {
   try {
     if (!key) {
@@ -71,5 +71,26 @@ export async function getCoverUrl({ key }: { key: string | null | undefined }) {
   } catch (error) {
     console.log(error);
     throw error; // Throw the error so the caller can handle it
+  }
+}
+
+export async function getSiteDataImgUrl(data: SiteData[]) {
+  let result: SiteData[] = [];
+  try {
+    await Promise.all(
+      data.map(async (ele) => {
+        if (ele.identifier.endsWith(`img`) || ele.identifier.endsWith(`image`)) {
+          let value = await getSingleUrl({ key: ele.value });
+          return result.push({ ...ele, value });
+        } else {
+          return result.push(ele);
+        }
+      })
+    );
+    return result;
+  } catch (err) {
+    console.log(err);
+    return data;
+    // result.push({ ...ele, value: `/product-placeholder.webp` });
   }
 }

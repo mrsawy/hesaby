@@ -80,7 +80,7 @@ export default function SideBar({ asideClassName, platforms, games }: any) {
   };
   return (
     <>
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center" dir="ltr">
         <button
           data-drawer-target="default-sidebar"
           data-drawer-toggle="default-sidebar"

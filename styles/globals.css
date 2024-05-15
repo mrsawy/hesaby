@@ -223,3 +223,32 @@ body {
 .dark ~ html {
   background: black;
 }
+
+.dark {
+  background: #101010;
+}
+
+/* .animation-appear {
+  animation: appear;
+  animation-timing-function: ease-in-out;
+} */
+
+nav.fixed>div[data-headlessui-state="open"] {
+  animation: appearHeight 1s ease-in-out;
+}
+
+@keyframes appearHeight {
+  0% {
+    height: 0px;
+    opacity: 0;
+    transform: translateY(-300px);
+  }
+  99% {
+    opacity: 1;
+    height: 230px;
+    transform: translateY(0px);
+  }
+  100% {
+    height: 100%;
+  }
+}

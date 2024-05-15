@@ -58,3 +58,7 @@ export function isValidUrl(url: string): boolean {
     return false;
   }
 }
+
+// export const getValue = (data: any[], key: string) => {
+//   return data.find((d) => d.identifier == key)?.value ?? null;
+// };

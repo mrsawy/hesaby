@@ -8,7 +8,7 @@ export default function OverLay({
   className?: String;
 }) {
   return (
-    <div className={classes.sky}>
+    <div className={classes.sky} dir={`ltr`}>
       <div className={`${classes.photo} ${className}`}>{children}</div>
     </div>
   );

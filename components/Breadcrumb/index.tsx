@@ -23,7 +23,10 @@ type Props = Element[];
 export default function Breadcrumb({ elements }: { elements: Props }) {
   return (
     <div role="presentation" onClick={handleClick}>
-      <Breadcrumbs aria-label="breadcrumb" className="text-gray-700 dark:text-gray-300 ">
+      <Breadcrumbs
+        aria-label="breadcrumb"
+        className="container text-gray-700 dark:text-gray-300 text-tiny md:text-lg"
+      >
         {elements.map((element: Element, i: number) => (
           <Link
             key={i}

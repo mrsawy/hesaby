@@ -31,6 +31,7 @@ export default async function allGames({ params, searchParams }: any) {
 
       <CardsContainer
         btnUrlPrefix="/games/"
+        type="game"
         btnTextPrice={false}
         btnTxt={`SEE MORE`}
         data={result}

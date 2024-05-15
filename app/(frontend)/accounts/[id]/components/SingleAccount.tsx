@@ -33,7 +33,7 @@ export default function SingleAccount({
 
           <Divider className="mt-4 mb-6" />
 
-          <div className="flex h-5 items-center space-x-4 text-small justify-center ">
+          <div className="flex h-5 items-center space-x-4 text-small justify-center " dir="ltr">
             <div className="flex flex-col gap-1">
               <div>البائع</div>
               <Link href={`/profile/${account?.seller?.id}`}>
@@ -71,17 +71,19 @@ export default function SingleAccount({
           <Divider className="mt-8 mb-6" />
 
           {account?.status == `accepted` && (
-            <Button className="m-auto py-2 px-4 mb-3">
-              <div className="flex  gap-4  ">
-                <div className="flex gap-1 md:gap-2 ">
-                  <p>{account.price}</p>
-                  <span>SR</span>
+            <div dir={`ltr`}>
+              <Button className="m-auto py-2 px-4 mb-3">
+                <div className="flex  gap-4  ">
+                  <div className="flex gap-1 md:gap-2 ">
+                    <span>ر.س</span>
+                    <p>{account.price}</p>
+                  </div>
+                  <div>
+                    <AddToCartIcon className="text-md lg:text-2xl" />
+                  </div>
                 </div>
-                <div>
-                  <AddToCartIcon className="text-md lg:text-2xl" />
-                </div>
-              </div>
-            </Button>
+              </Button>
+            </div>
           )}
           {/* </div> */}
         </div>

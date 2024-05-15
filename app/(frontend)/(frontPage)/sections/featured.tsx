@@ -23,25 +23,27 @@ export default async function Featured() {
   return (
     <>
       {/* <div className="flex gap-4 px-12 lg:px-32 xl:36 2xl:px-40 py-3 flex-wrap w-full  "> */}
-      <div className="w-[70vw] sm:w-[89vw] lg:my-24 mx-auto">
+      <div className=" sm:w-[89vw] lg:my-24 mx-auto sm:container w-[72vw]">
         <Carousel
           data={gameData}
-          enableDecs={false}
           label={`Featured Games`}
           btnTxt={`SEE MORE`}
           btnTextPrice={false}
           btnUrlPrefix={`/games/`}
+          type={`game`}
+          // btnUrlAfterFix={`/games/`}
         />
       </div>
       <hr className="mx-2 lg:mx-40 shadow-lg border-gray-500 dark:border-gray-600" />
 
-      <div className="w-[70vw] sm:w-[89vw] lg:my-24 mx-auto">
+      <div className=" sm:w-[89vw] lg:my-24 mx-auto sm:container w-[72vw]">
         <Carousel
+          type={`account`}
           data={accountData}
           label={`Featured Accounts`}
-          enableDecs={true}
           btnTextPrice={true}
           btnUrlPrefix={`/accounts/`}
+          btnTxt={`PREVIEW`}
         />
       </div>
     </>

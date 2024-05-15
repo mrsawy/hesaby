@@ -11,6 +11,7 @@ import { userLogin as userLoginSchema, userSignup as signupSchema } from "@/lib/
 import { redirect } from "next/navigation";
 
 import { jwtVerify, SignJWT } from "jose";
+import getUrl, { getSingleUrl } from "@/lib/backend/getImageUrl";
 // import { createSecretKey } from "crypto";
 
 //
@@ -33,6 +34,12 @@ async function loginAction(formData: FormData) {
       where: {
         email: rawFormData.email,
       },
+      include: {
+        cart: { include: { account: { include: { game: true, platform: true, seller: true } } } },
+        wishList: {
+          include: { account: { include: { game: true, platform: true, seller: true } } },
+        },
+      },
     });
     if (!user) {
       throw new Error("Invalid Email ");
@@ -54,7 +61,23 @@ async function loginAction(formData: FormData) {
 
     cookies().set(`hesaby-user-token`, token);
 
-    return { user };
+    let updatedCart = await getUrl({
+      data: user.cart.map((ele) => ele.account),
+      key: `accountImg`,
+    });
+
+    let updatedWishlist = await getUrl({
+      data: user.wishList.map((ele) => ele.account),
+      key: `accountImg`,
+    });
+    return {
+      user: {
+        ...user,
+        cart: updatedCart,
+        // wishlist: updatedWishlist ,
+        wishList: updatedWishlist,
+      },
+    };
     // revalidatePath(`/`);
     // redirect(`/`);
   } catch (error: any) {
@@ -110,6 +133,12 @@ async function signUpAction(formData: FormData) {
         password: hashedPassword,
         phoneNumber: rawFormData.phoneNumber,
       },
+      include: {
+        cart: { include: { account: { include: { game: true, platform: true, seller: true } } } },
+        wishList: {
+          include: { account: { include: { game: true, platform: true, seller: true } } },
+        },
+      },
     });
 
     // console.log(`newUser`, newUser);
@@ -129,7 +158,21 @@ async function signUpAction(formData: FormData) {
 
     cookies().set(`hesaby-user-token`, token);
     revalidatePath(`/auth`);
-    return { user: newUser };
+
+    let updatedCart = await getUrl({
+      data: newUser.cart.map((ele) => ele.account),
+      key: `accountImg`,
+    });
+
+    let updatedWishlist = await getUrl({
+      data: newUser.wishList.map((ele) => ele.account),
+      key: `accountImg`,
+    });
+    // wishList: updatedWishlist,
+
+    return { user: { ...newUser, cart: updatedCart, wishList: updatedWishlist } };
+
+    // return { user: newUser };
     // return revalidatePath(`/`);
   } catch (error: any) {
     if (error instanceof yup.ValidationError) {

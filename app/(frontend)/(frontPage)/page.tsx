@@ -1,42 +1,28 @@
 import HeroSection from "./sections/HeroSection";
 import MaskSection from "./sections/MaskSection";
-import Footer from "@/components/footer/footer";
+import { Footer } from "@/components/footer";
+import { ScrollToTop } from "@/components/ScrollToTop";
+import { FAQ } from "@/components/FAQ";
 import Featured from "./sections/featured";
 import prisma from "@/prisma/db";
 import getImageUrl from "@/lib/backend/getImageUrl";
 import { VortexSection } from "./sections/VortexSection";
 import SliderAdSection from "./sections/SliderAdSection";
+import HowItWorks from "./sections/HowItWorks";
+import { About } from "../about-us/_components/about";
 
 async function page() {
   return (
     <div>
-      {/* <HeroSection /> */}
-      <VortexSection />
-      {/* <hr className="mx-2 lg:mx-40 shadow-lg border-gray-500 dark:border-gray-600" /> */}
-
-      <SliderAdSection />
-
+      {/* @ts-expect-error Server Component */}
+      <HeroSection />
+      <HowItWorks />
+      <About />
       <hr className="mx-2 lg:mx-40 shadow-lg border-gray-500 dark:border-gray-600" />
       {/* @ts-expect-error Server Component */}
       <Featured />
-      {/* <Featured
-        data={gameData}
-        enableDecs={false}
-        label={`Featured Games`}
-        btnTxt={`SEE MORE`}
-        btnTextPrice={false}
-        btnUrlPrefix={`/games/`}
-      />
       <hr className="mx-2 lg:mx-40 shadow-lg border-gray-500 dark:border-gray-600" />
-      <Featured
-        data={accountData}
-        label={`Featured Accounts`}
-        enableDecs={true}
-        btnTextPrice={true}
-        btnUrlPrefix={`/accounts/`}
-      /> */}
-      <MaskSection />
-      <Footer />
+      <FAQ />
     </div>
   );
 }

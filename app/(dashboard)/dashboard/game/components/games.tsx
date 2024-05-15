@@ -1,15 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
 "use client";
 import { Button, Input, TableCell, TableRow } from "@nextui-org/react";
 import Link from "next/link";
@@ -25,7 +13,6 @@ type Props = {
 //
 export const Games = ({ tableData }: Props) => {
   const [optData, addOptData] = useOptimistic(tableData, (state, newData) => [...state, newData]);
-
 
   const inputs = [
     { title: `Title`, name: `title`, type: `text` },
@@ -60,7 +47,7 @@ export const Games = ({ tableData }: Props) => {
           />
         </div> */}
         <div className="flex flex-row gap-3.5 flex-wrap ml-auto">
-          <AddNew  tableName={`game`} inputs={inputs} label="Add New Game" />
+          <AddNew tableName={`game`} inputs={inputs} label="Add New Game" />
         </div>
       </div>
       <div className="max-w-[95rem] mx-auto w-full">

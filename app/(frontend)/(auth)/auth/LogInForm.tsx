@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useTransition } from "react";
 
 import classes from "./LoginForm.module.css";
 import * as yup from "yup";
@@ -13,12 +13,20 @@ import { ReloadIcon } from "@radix-ui/react-icons";
 import { useRouter } from "next/navigation";
 import useAuthStore, { setLogin } from "@/store/authStore";
 import useGeneralStore from "@/store/generalStore";
+import { useTranslation } from "react-i18next";
+
 import Link from "next/link";
+import useCartStore, { setCart, setCartState } from "@/store/cartStore";
+import useWishlistStore, { setWishlist, setWishListState } from "@/store/wishlistStore";
+import { cn } from "@/lib/utils";
 
 // import { useSession, signIn, signOut } from "next-auth/react";
 // import { wait } from "@/lib/utils";
 
 export default function LogInForm() {
+  //
+  let { t } = useTranslation();
+  //
   let { isLoading, isSuccess, isError, user, isLogged } = useAuthStore();
   let { setGeneralIsLoading } = useGeneralStore();
 
@@ -33,7 +41,7 @@ export default function LogInForm() {
     setGeneralIsLoading(isLoading);
   }, [isLoading]);
 
-  return isError && !isLoading && !isSuccess ? (
+  return (
     <CSSTransition
       classNames={{
         enter: classes.formenter,
@@ -50,6 +58,7 @@ export default function LogInForm() {
       in={!inProp}
     >
       <form
+        dir="rtl"
         onSubmit={() => {
           setLoading(true);
         }}
@@ -69,6 +78,11 @@ export default function LogInForm() {
                 setLoading(false);
                 // authDispatch({ type: `LOGIN`, payload: { user } });
                 setLogin(user);
+
+                //
+                
+                setCartState(user);
+                setWishListState(user); //
                 Swal.fire({
                   icon: "success",
                   title: "Congrats !",
@@ -76,14 +90,10 @@ export default function LogInForm() {
                   timer: 2000,
                   showConfirmButton: false,
                 });
-                setLogin(user);
                 setTimeout(() => {
                   router.replace(`/`);
                 }, 1300);
-                // .then(() => {
-                // });
               }
-              // setLoading(false);
             } catch (error: any) {
               setLoading(false);
               console.log(`err`, error);
@@ -121,6 +131,7 @@ export default function LogInForm() {
               // console.log(user);
               // authDispatch({ type: `LOGIN`, payload: { user } });
               setLogin(user);
+
               Swal.fire({
                 icon: "success",
                 title: "Congrats !",
@@ -128,10 +139,13 @@ export default function LogInForm() {
                 timer: 2000,
                 showConfirmButton: false,
               });
-              // router.refresh()
-              // setTimeout(() => {
-              // window.location.href = "/";
-              // }, 2000);
+
+              if (Array.isArray(useCartStore.getState().cart)) {
+                await setCart(useCartStore.getState().cart);
+              }
+              if (Array.isArray(useWishlistStore.getState().wishlist)) {
+                await setWishlist(useWishlistStore.getState().wishlist);
+              }
             } catch (error: any) {
               setLoading(false);
               if (error instanceof yup.ValidationError) {
@@ -150,9 +164,9 @@ export default function LogInForm() {
             }
           }
         }}
-        className={`${classes.form_container} ${classes.form} sm:p-4 h-[90%]  sm:h-[85%] `}
+        className={`${classes.form_container} ${classes.form} sm:p-4 h-[84%]  sm:h-[85%] `}
       >
-        <div className={classes.center_container}>
+        <div className={cn(classes.center_container , `mb-8`)} dir={`ltr`}>
           <div className={classes.login_signup}>
             <p
               onClick={() => {
@@ -160,7 +174,7 @@ export default function LogInForm() {
                 setInProp(false);
               }}
             >
-              <span className={`${authState === "Log in" && classes.chosen}`}>log in</span>
+              <span className={`${authState === "Log in" && classes.chosen}`}>{t(`login`)}</span>
             </p>
             <p
               onClick={() => {
@@ -168,7 +182,7 @@ export default function LogInForm() {
                 setInProp(true);
               }}
             >
-              <span className={`${authState === "Sign up" && classes.chosen}`}>sign up</span>
+              <span className={`${authState === "Sign up" && classes.chosen}`}>{t(`signup`)}</span>
             </p>
           </div>
         </div>
@@ -189,13 +203,13 @@ export default function LogInForm() {
           unmountOnExit
           in={inProp}
         >
-          <section ref={nodeRef} className={classes.name_section}>
+          <section ref={nodeRef} className={classes.name_section} dir="rtl">
             <div className={classes.name_container}>
               <input
                 name="fname"
                 type="name"
                 className={classes.name_input}
-                placeholder="First Name"
+                placeholder={t("firstName")}
               />
               <hr className={classes.hrPink} />
             </div>
@@ -204,7 +218,7 @@ export default function LogInForm() {
                 name="lname"
                 type="name"
                 className={classes.name_input}
-                placeholder="Last Name"
+                placeholder={t("lastName")}
               />
               <hr className={classes.hrPink} />
             </div>
@@ -215,7 +229,7 @@ export default function LogInForm() {
             type="email"
             name="email"
             className={classes.email_input}
-            placeholder="Email Address"
+            placeholder={t("email")}
           />
           <hr />
         </div>
@@ -242,7 +256,7 @@ export default function LogInForm() {
               pattern="[0-9]*"
               name="phone"
               className={classes.name_input}
-              placeholder="Phone Number"
+              placeholder={t("phoneNumber")}
               onChange={(event) => {
                 event.target.value = event.target.value.replace(/[^0-9]/g, "");
               }}
@@ -256,13 +270,13 @@ export default function LogInForm() {
             name="password"
             type="password"
             className={classes.password_input}
-            placeholder="Password"
+            placeholder={t("password")}
           />
           <hr />
           <div className={classes.forget_password_container}>
             {authState === `Log in` && (
               <Link href={`/forget-password`}>
-                <p className=" text-gray-500 hover:text-white">forgot your password ?</p>
+                <p className=" text-gray-500 hover:text-white">{t(`forgotPassword`)}</p>
               </Link>
             )}{" "}
           </div>
@@ -288,26 +302,24 @@ export default function LogInForm() {
               type="password"
               name="confirm_password"
               className={classes.password_input}
-              placeholder="Confirm Password"
+              placeholder={t(`confirmPassword`)}
             />
             <hr />
           </div>
         </CSSTransition>
 
-        <div className={classes.center_container}>
+        <div className={cn(classes.center_container , `mt-7`)}>
           <button disabled={loading} type="submit" className={classes.form_button}>
             {loading ? (
               <div className="flex justify-center items-center text-center">
                 <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
               </div>
             ) : (
-              authState
+              t(authState)
             )}
           </button>
         </div>
       </form>
     </CSSTransition>
-  ) : (
-    <></>
   );
 }

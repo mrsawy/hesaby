@@ -74,7 +74,7 @@ export const createAuthSlice = (set: any, get: any, third: any) => ({
         },
         body: JSON.stringify({ token: get().token }),
       });
-      let { user, error } = await response.json();
+      let { user } = await response.json();
       if (!response.ok) throw new Error();
       set({ isLoading: false, user, isSuccess: true, isError: false, isLogged: true });
     } catch (error) {

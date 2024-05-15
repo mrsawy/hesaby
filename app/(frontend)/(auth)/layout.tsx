@@ -10,5 +10,6 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
     router?.replace(`/`);
     return <></>;
   }
-  return <>{children}</>;
+  return <div >{children}</div>;
 }
+

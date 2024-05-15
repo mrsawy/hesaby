@@ -90,10 +90,28 @@ export const SidebarWrapper = () => {
             </SidebarMenu>
 
             <SidebarMenu title="General">
-              <SidebarItem isActive={pathname === "/view"} title="Site Data" icon={<ViewIcon />} />
+              <CollapseItems
+                // isActive={true}
+                className={
+                  pathname.includes(`/dashboard/site-data`) &&
+                  !pathname.includes(`/site-data/general`)
+                    ? `bg-blue-500/15`
+                    : ``
+                }
+                icon={<ViewIcon />}
+                items={[
+                  { text: "Home Page", href: `/dashboard/site-data/home-page` },
+                  { text: "About Page", href: `/dashboard/site-data/about-page` },
+                  { text: "Contact Page", href: "/dashboard/site-data/contact-page" },
+                ]}
+                title="Site Data"
+              />
+
+              {/* <SidebarItem isActive={pathname === "/view"} title="Site Data" icon={<ViewIcon />} /> */}
               <SidebarItem
-                isActive={pathname === "/settings"}
+                isActive={pathname.includes(`/dashboard/site-data/general`)}
                 title="Settings"
+                href="/dashboard/site-data/general"
                 icon={<SettingsIcon />}
               />
             </SidebarMenu>

@@ -27,5 +27,5 @@ export default function SingleGameBreadcrumb({ gameName }: any) {
     },
   ];
 
-  return <Breadcrumb elements={elements} />;
+  return <Breadcrumb  elements={elements} />;
 }

@@ -46,7 +46,7 @@ export default function SliderAdSection() {
         align: "start",
       }}
       //   style={{ maxWidth: `100%` }}
-      className="w-[70vw] sm:w-[89vw] lg:my-24 mx-auto max-[500px]:bg-black"
+      className=" sm:w-[89vw] lg:my-24 mx-auto max-[500px]:bg-black container w-[70vw]"
       //   <div
       //   >
       //   className="flex gap-4 px-16 lg:px-32 xl:36 2xl:px-40 py-3 flex-wrap w-full  "
