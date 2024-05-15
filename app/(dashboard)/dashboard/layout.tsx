@@ -13,6 +13,13 @@ export const metadata: Metadata = {
   description: "Hesaby Dashboard",
 };
 
+
+export const dynamic = "force-dynamic";
+export const revalidate = 20;
+
+
+
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <div dir="ltr">
